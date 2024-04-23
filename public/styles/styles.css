@@ -44,10 +44,11 @@ body {
 :root,
     :root.default {
         --bg-color: #f6f6f6;
-        --bg-color-alt: #d3dded;
+        --bg-color-alt: #edf0f5;
         --text-color: #000000;
         --text-color-light: #ffffff;
         --CTA-color: #31D600;
+        --CTA-color-alt: #79d35d;
         --outline-color: rgba(255, 255, 255, 0.3);
         --delete-color: rgb(244, 61, 61);
 }
@@ -67,8 +68,6 @@ header {
 }
 header i {
     font-size: 30px;
-}
-.headerWrapper {
 }
 .mainNavigation {
     width: 100dvw;
@@ -102,16 +101,19 @@ main {
     align-items: center;
     padding: 2em 1em 3em 1em;
 }
+.sectionHeading {
+    font-size: 30px;
+}
 #mainContent {
-    padding: 1em 1em 0 1em;
     position: relative;
+    width: 100dvw;
+    height: 90dvh;
+    justify-content: center;
     background-image: url('../media/bck_cpr.webp');
     background-size: cover;
     background-position: center;
-    justify-content: center;
-    color: white;
-    width: 100dvw;
-    height: 85dvh;
+    color: var(--text-color-light);
+    padding: 1em 1.5em 0 1.5em;
     z-index: 1;
 }
 
@@ -120,8 +122,10 @@ main {
 }
 
 h1 {
-    font-size: 45px;
+    width: min-content;
+    font-size: 32px;
     text-align: center;
+    margin: 0 0 .3em 0;
 }
 .headerTagLine {
     font-size: 30px;
@@ -129,8 +133,10 @@ h1 {
     margin: 0 0 .2em 0;
 }
 #mainContent > p {
+    width: 90%;
+    max-width: 400px;
     font-size: 18px;
-    margin: .5em 0;
+    margin: 1em 0;
     text-align: center;
 }
 #arrowDown {
@@ -158,10 +164,184 @@ h1 {
     z-index: -1;
 }
 .ctaBtn {
-    border: none;
     background-color: var(--CTA-color);
     font-size: 24px;
     border-radius: 50px;
     padding: .6em 1em;
-    margin: 1em 0;
+    transition: 250ms ease-in-out;
+    margin: 2em 0;
+}
+.ctaBtn:hover {
+    outline: 3px solid var(--CTA-color);
+    color: var(--CTA-color);
+    background-color: transparent;
+}
+.readMore {
+    width: 300px;
+    outline: 2px solid var(--CTA-color);
+    background-color: transparent;
+    font-size: 18px;
+    border-radius: 50px;
+    text-align: center;
+    transition: 400ms ease-in-out;
+    padding: .6em 1em;
+}
+.readMore:active,.readMore:focus,.readMore:hover {
+    background-color: var(--CTA-color);
+}
+
+#courseCatalog {
+    padding: 5em 1em;
+}
+.courseCategories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    width: 100%;
+    margin: 3em 0 2em 0;
+}
+.courseResume {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    min-height: 20em;
+    border-radius: 15px;
+    background-color: var(--bg-color-alt);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    padding: 2em 0;
+}
+.courseList li {
+    text-align: left;
+    margin: 0 0 .5em 0;
+    list-style-type:square;
+}
+.titleElements {
+    text-align: center;
+}
+.titleElements i {
+    font-size: 35px;
+    margin: 0 0 .1em 0;
+}
+
+footer {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100dvw;
+    background-color: var(--bg-color-alt);
+    padding: 2em 0;
+}
+.footerSection {
+    display: flex;
+    flex-direction: column;
+    gap: .4em;
+}
+.logInBtn {
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--CTA-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: 100ms ease-in-out;
+    padding: .5em 1em;
+}
+.logInBtn:hover{
+    outline: 3px solid var(--text-color);
+}
+
+
+/* --------------------- iPad Version -----------------------*/ 
+@media screen and (width >= 725px) {
+    header {
+        height: 90px;
+        padding: 10px 2em 2px 2em;
+    }
+    header i {
+        font-size: 50px;
+    }
+    .mainNavigation {
+        top: 92px;
+        font-size: 30px;
+    }
+    #mainContent > p {
+        font-size: 20px;
+    }
+    h1 {
+        font-size: 60px;
+    }
+    #arrowDown {
+        width: 80px;
+        height: 80px;
+        font-size: 50px;
+    }
+    .sectionHeading {
+        font-size: 50px;
+    }
+    .sectionSubHeading {
+        font-size: 20px;
+    }
+    .ctaBtn {
+        font-size: 30px;
+    }
+    .readMore {
+        width: 400px;
+        outline: 2px solid var(--CTA-color);
+        background-color: transparent;
+        font-size: 22px;
+        text-align: center;
+        transition: 400ms ease-in-out;
+        margin: 0;
+    }
+    #courseCatalog {
+        padding: 7em 1em;
+    }
+    .courseResume {
+        min-height: 25em;
+    }
+    .courseCategories {
+        gap: 3em;
+    }
+    .courseList {
+        font-size: 20px;
+    }
+    .titleElements {
+        text-align: center;
+        font-size: 30px;
+    }
+    .titleElements i {
+        font-size: 50px;
+    }
+    footer {
+        justify-content: center;
+        gap: 2em;
+    }
+    .logInBtn {
+        width: 200px;
+    }
+}
+
+
+/* --------------------- Desktop Version -----------------------*/ 
+@media screen and (width >= 1700px) {
+    header {
+        height: 100px;
+        padding: 10px 4em 2px 4em;
+    }
+    #courseCatalog {
+        padding: 7em 1em;
+        margin: 0 0 6em 0;
+    }
+    .courseCategories {
+        flex-direction: row;
+        justify-content: center;
+        margin: 6em 0 2em 0;
+    }
+    footer {
+        gap: 6em;
+    }
 }
