@@ -1,8 +1,10 @@
 //Importér Express-modulet
 const express = require('express');
+const cors = require('cors');
 
 //Opret en Express-app
 const app = express();
+app.use(cors());
 
 app.post('/login', (req, res) => {
     //Implementer login her
