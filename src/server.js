@@ -1,10 +1,17 @@
 //Importér Express-modulet
 const express = require('express');
 const cors = require('cors');
+const { connectToDatabase, closeDatabaseConnection} = require('./modules/database');
+const { hashPassword } = require('./modules/password-hasher');
+const { validatePassword } = require('./modules/password-validator');
+const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
+const { createSession, getSession, deleteSession } = require('./modules/session');
+const { setCookie, getCookie } = require('./modules/cookies');
 
 //Opret en Express-app
 const app = express();
 app.use(cors());
+const port = 3000;
 
 app.post('/login', (req, res) => {
     //Implementer login her
@@ -12,7 +19,7 @@ app.post('/login', (req, res) => {
   
 //Endpoint for registrering
 app.post('/register', (req, res) => {
-    //Implementer registrering her
+    const { username, password } = req.body;
 });
   
 //Endpoint for læsning af kurser
