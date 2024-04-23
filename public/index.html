@@ -13,32 +13,33 @@
     <meta property="og:url" content="http://tjuulm.dk">
     <meta property="og:title" content="Beredt Borgere | Førstehjælpskurser til Private Borgere og Ervherv">
     <meta property="og:description" content="Beredt Borgere - Få livsreddende førstehjælpskurser til private borgere og erhverv. Bliv klar til at redde liv når uheld opstår med vores skræddersyede træning.">
-    <meta property="og:image" content= "media/kphLogo-wide">
+    <meta property="og:image" content= "/public/media/beredtLogo_Dark">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
-    <link rel="stylesheet" href="">
-    <link rel="icon" href="media/pizzaSlice.png" type="image/svg">
-    <script src="" defer></script>
+    <link rel="stylesheet" href="/public/styles/styles.css">
+    <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
+    <script src="/public/scripts/index.js" defer></script>
+    <script src="/public/scripts/mobileMenu.js" defer></script>
 </head>
 <body>
     <header>
         <a href="index.html" class="responsiveLogo">
             <picture>
               <source
-              srcset="/public/media/"
-              width="150"
+              srcset="/public/media/beredtLogo_Dark.webp"
+              width="182"
+              height="88"
               media="(min-width: 725px)">
-              <img src="/public/" alt="Logo for Beredt Borger.dk" height="60" width="60">
+              <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" title="Til forsiden for Beredt Borgere.dk" width="91" height="44">
             </picture>
           </a>
-        <!-- <img src="" alt="Logo for Beredt Borger" class="companyLogo" width="60" height="60"> -->
-        <i class="fas fa-bars"></i>
-        <nav id="mainMenu">
-            <ul>
-                <li><a href="">Privat</a></li>
-                <li><a href="">Erhverv</a></li>
-                <li><a href="">Kontakt</a></li>
-                <li><a href="">Om os</a></li>
+        <i class="fas fa-bars" id="mobileMenuBtn"></i>
+        <nav id="mainMenu" class="mainNavigation">
+            <ul class="navigationList">
+                <li><a href="/public/html/private.html">Privat</a></li>
+                <li><a href="/public/html/business.html">Erhverv</a></li>
+                <li><a href="/public/html/contact.html">Kontakt</a></li>
+                <li><a href="/public/html/about.html">Om os</a></li>
             </ul>
         </nav> 
     </header>
@@ -62,10 +63,10 @@
             <a href="/public/html/business.html" class="courseResume">
                 <i class="far fa-building"></i>
                     <h3>Erhverv</h3>
-                    <span>[Insert Course]</span>
-                    <span>[Insert Course]</span>
-                    <span>[Insert Course]</span>
-                    <span>[Insert Course]</span>
+                    <p>[Insert Course]</p>
+                    <p>[Insert Course]</p>
+                    <p>[Insert Course]</p>
+                    <p>[Insert Course]</p>
                 <div class="readMore"><span>Mere om Kurser for Erhverv</span></div>
             </a>
         </section>
