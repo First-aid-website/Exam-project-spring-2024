@@ -17,22 +17,23 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
     <link rel="stylesheet" href="/public/styles/styles.css">
+    <link rel="stylesheet" href="/public/styles/animation.css">
     <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
     <script src="/public/scripts/index.js" defer></script>
     <script src="/public/scripts/mobileMenu.js" defer></script>
 </head>
 <body>
     <header>
-        <a href="index.html" class="responsiveLogo">
+        <a href="#" class="responsiveLogo">
             <picture>
-              <source
-              srcset="/public/media/beredtLogo_Dark.webp"
-              width="182"
-              height="88"
-              media="(min-width: 725px)">
-              <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" title="Til forsiden for Beredt Borgere.dk" width="91" height="44">
+            <source
+            srcset="/public/media/beredtLogo_Dark.webp"
+            width="182"
+            height="88"
+            media="(min-width: 725px)">
+            <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" title="Til forsiden for Beredt Borgere.dk" width="91" height="44">
             </picture>
-          </a>
+        </a>
         <i class="fas fa-bars" id="mobileMenuBtn"></i>
         <nav id="mainMenu" class="mainNavigation hidden">
             <ul class="navigationList">
@@ -44,12 +45,14 @@
         </nav> 
     </header>
     <main>
-        <div class="heroImage" id="indexHeroImage"></div>
         <section id="mainContent" class="sectionWrapper">
-            <h1>Beredt Borger</h1>
+            <img src="/public/media/favIcon_Light.webp" class="logo_small" alt="Beredt Borgere logo i mindre udgave der kun viser et stort B og en pulslinje" height="80" width="80">
+            <h1>Beredt Borgere</h1>
             <h2 class="headerTagLine">Førstehjælpskursus der gør en forskel</h2>
             <p>Med et kursus fra Beredt Borger kan du som en privat borger, eller erhverv, lære at yde livsreddende førstehjælp.</p>
             <button class="ctaBtn">Kontakt os</button>
+            <div class="darken"></div>
+            <a href="#courseCatalog" id="arrowDown"><i class="fas fa-chevron-down animation_hover"></i></a>
         </section>
         <section id="courseCatalog" class="sectionWrapper">
             <h2 class="sectionHeading">Vores Services</h2>
