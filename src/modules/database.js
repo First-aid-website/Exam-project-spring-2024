@@ -1,7 +1,6 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const config = require('../config-settings.json');
 
-// Nu kan du tilgå forbindelsesoplysningerne fra config-objektet
 const mongodb = config.mongodb.connection;
 const dbname = config.mongodb.dbname;
 
@@ -37,11 +36,23 @@ async function closeDatabaseConnection(){
     }
 }
 
-async function whatever(){
-    
+async function insertUser(user) {
+    try {
+        //Open db connnection
+        const db = await connectToDatabase();
+        //Choose tabel/collection
+        const collection = db.collection('users');
+        //Insert user into users
+        await collection.insertOne(user);
+        console.log('Bruger blev indsat i databasen');
+    } catch (error) {
+        console.error('Fejl ved indsættelse af bruger i databasen: ', error);
+        throw error;
+    }
 }
 
 module.exports = {
     connectToDatabase,
-    closeDatabaseConnection
+    closeDatabaseConnection,
+    insertUser
 }

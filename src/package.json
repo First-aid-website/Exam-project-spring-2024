@@ -6,6 +6,7 @@
     "express": "^4.19.2",
     "helmet": "^7.1.0",
     "mongodb": "^6.5.0",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "speakeasy": "^2.0.0"
   }
 }

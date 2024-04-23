@@ -1,7 +1,7 @@
 //Importér Express-modulet
 const express = require('express');
 const cors = require('cors');
-const { connectToDatabase, closeDatabaseConnection} = require('./modules/database');
+const { connectToDatabase, closeDatabaseConnection, insertUser } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
 const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
@@ -18,8 +18,29 @@ app.post('/login', (req, res) => {
 });
   
 //Endpoint for registrering
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const { username, password } = req.body;
+    try{
+        const passwordValidation = validatePassword(password);
+        const passwordHash = hashPassword(password);
+
+        if (!passwordValidation.isValid) {
+            return res.status(400).json({ error: passwordValidation.message });
+        }
+        
+        const user = {
+            username: username,
+            password: passwordHash
+        };
+
+        await connectToDatabase();
+        await insertUser(user);
+        await closeDatabaseConnection();
+    }
+    catch(error){
+        console.error('Error during registration of user: ', error);
+        res.status(500).json({ error: 'Der opstod en fejl under registrering af bruger.' });
+    }
 });
   
 //Endpoint for læsning af kurser
