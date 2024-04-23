@@ -1,0 +1,7 @@
+{
+    "mongodb": {
+      "connection": "mongodb+srv://nicklas:WiNewzEFX5sPv4MP@cluster0.9cqazrz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+      "dbname": "BeredtBorgere"
+    }
+  }
+  
