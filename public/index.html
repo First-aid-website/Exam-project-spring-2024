@@ -47,44 +47,58 @@
     <main>
         <section id="mainContent" class="sectionWrapper">
             <img src="/public/media/favIcon_Light.webp" class="logo_small" alt="Beredt Borgere logo i mindre udgave der kun viser et stort B og en pulslinje" height="80" width="80">
-            <h1>Beredt Borgere</h1>
-            <h2 class="headerTagLine">Førstehjælpskursus der gør en forskel</h2>
+            <h1>Førstehjælpskursus der gør en forskel</h1>
             <p>Med et kursus fra Beredt Borger kan du som en privat borger, eller erhverv, lære at yde livsreddende førstehjælp.</p>
-            <button class="ctaBtn">Kontakt os</button>
+            <a href="/public/html/contact.html" class="ctaBtn">Kontakt os</a>
             <div class="darken"></div>
             <a href="#courseCatalog" id="arrowDown"><i class="fas fa-chevron-down animation_hover"></i></a>
         </section>
         <section id="courseCatalog" class="sectionWrapper">
             <h2 class="sectionHeading">Vores Services</h2>
-            <h3>Vi tilbyder følgende kurser</h3>
-            <a href="/public/html/private.html" class="courseResume">
-                <i class="fas fa-user"></i>
-                    <h3>Privat Borger</h3>
-                    <span>[Insert Course]</span>
-                <div class="readMore"><span>Mere om Private Kurser</span></div>
-            </a>
-            <a href="/public/html/business.html" class="courseResume">
-                <i class="far fa-building"></i>
-                    <h3>Erhverv</h3>
-                    <p>[Insert Course]</p>
-                    <p>[Insert Course]</p>
-                    <p>[Insert Course]</p>
-                    <p>[Insert Course]</p>
-                <div class="readMore"><span>Mere om Kurser for Erhverv</span></div>
-            </a>
+            <span class="sectionSubHeading">Vi tilbyder følgende kurser</span>
+            <aside class="courseCategories">
+                <div class="courseResume">
+                    <div class="titleElements">
+                        <i class="fas fa-user"></i>
+                        <h3>Privat Borger</h3>
+                    </div>
+                    <ul class="courseList" id="privateCourses">
+                        <li>[Insert Course]</li>
+                        <li>[Insert Course]</li>
+                        <li>[Insert Course]</li>
+                        <li>[Insert Course]</li>
+                    </ul>
+                    <a href="/public/html/private.html" class="readMore"><span>Mere om kurser for Private</span></div></a>
+                </div>
+                <div class="courseResume">
+                    <div class="titleElements">
+                        <i class="far fa-building"></i>
+                        <h3>Erhverv</h3>
+                    </div>
+                    <ul class="courseList" id="erhvervCourses">
+                        <li>[Insert Course]</li>
+                        <li>[Insert Course]</li>
+                        <li>[Insert Course]</li>
+                        <li>[Insert Course]</li>
+                    </ul>
+                    <a href="/public/html/business.html" class="readMore"><span>Mere om Kurser for Erhverv</span></div></a>
+                    </div>
+            </aside>
         </section>
-        <!-- <section id="FAQ" class="sectionWrapper"></section> -->
     </main>
     <footer>
-        <img src="" alt="Logo for Beredt Borger" class="companyLogo" width="50" height="50">
-        <button id="logIn" class="logInBtn">Personale Login</button>
+        <div class="footerSection">
+            <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" class="companyLogo" width="100" height="50">
+            <button id="logIn" class="logInBtn">Personale Login <i class="fas fa-right-to-bracket"></i></button>
+        </div>
         <ul class="footerSection" id="kontakt">
-            <li>[Adresse]</li>
-            <li><a href="mailto:"><i class="far fa-envelope"></i>Email:[email@email.com]</a></li>
-            <li><a href="tel:"><i class="fas fa-phone"></i>Mobil: +45 41816360</a></li>
-            <li>Tider: Man-Fre 09:00 - 17:00</li>
+            <li><i class="fas fa-map-marker-alt"></i> [Adresse]</li>
+            <li><a href="mailto:"><i class="far fa-envelope"></i> Email:[email@email.com]</a></li>
+            <li><a href="tel:"><i class="fas fa-phone"></i> Mobil: +45 41816360</a></li>
+            <li><i class="far fa-clock"></i> Tider: Man-Fre 09:00 - 17:00</li>
             <li>CVR: [CVR]</li>
         </ul>
+
     </footer>
 </body>
 </html>
