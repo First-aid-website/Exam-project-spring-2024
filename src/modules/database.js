@@ -51,8 +51,22 @@ async function insertUser(user) {
     }
 }
 
+async function findUser(username){
+    try{
+        const db = await connectToDatabase();
+        const collection = db.collection('users');
+        const user = await collection.findOne({ username: username });
+        return user;
+    }
+    catch(error){
+        console.error('Fejl ved søgning efter bruger i databasen: ', error);
+        throw error;
+    }
+}
+
 module.exports = {
     connectToDatabase,
     closeDatabaseConnection,
-    insertUser
+    insertUser,
+    findUser
 }
