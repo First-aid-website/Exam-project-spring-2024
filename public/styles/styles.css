@@ -9,6 +9,9 @@
 *:focus{
     outline: 3px solid var(--text-color);
 }
+*::selection {
+    background-color: var(--CTA-color-alt);
+}
 .hidden {
     display: none;
 }
@@ -419,7 +422,8 @@ footer {
         border-bottom: 2px solid transparent;
         padding: 5px;
     }
-    .navigationList li>a:hover, .navigationList li:focus {
+    .navigationList li>a:hover, .navigationList li>a:focus {
+        outline: none;
         border-bottom: 2px solid var(--CTA-color-alt);
     }
     #courseCatalog {
