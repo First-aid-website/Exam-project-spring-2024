@@ -15,13 +15,11 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         });
 
         const data = await response.json();
-        
-        if (!response.ok) {
+        if (response.ok) {
+            window.location.href = data.redirectUrl;
+        } else {
             throw new Error(data.error);
         }
-
-        // Assuming successful login
-        alert(data.message); // Display a success message
     } catch (error) {
         console.error("Error:", error);
         alert(error.message); // Display the error message

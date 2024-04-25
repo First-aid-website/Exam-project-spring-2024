@@ -1,7 +1,9 @@
 //Importér Express-modulet
 const express = require('express');
+const bcrypt = require('bcrypt');
 const cors = require('cors');
-const { connectToDatabase, closeDatabaseConnection, insertUser } = require('./modules/database');
+const path = require('path');
+const { connectToDatabase, closeDatabaseConnection, insertUser, findUser } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
 const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
@@ -12,13 +14,58 @@ const { setCookie, getCookie } = require('./modules/cookies');
 const app = express();
 app.use(cors());
 app.use(express.json()); // Parse JSON bodies
+app.use(express.static(path.join(__dirname, 'public'))); //Til redirects
 const port = 3000;
 
-app.post('/login', (req, res) => {
-    //Implementer login her
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    try{
+        const user = await findUser(username);
+
+        console.log('User:', user);
+
+        // Check om brugeren har aktiveret MFA
+        if (user.mfaEnabled) {
+            // Valider MFA-koden
+            const isMfaValid = verifyMFACode(user.mfaSecret, mfaCode);
+            if (!isMfaValid) {
+                return res.status(401).json({ error: 'MFA-koden er forkert.' });
+            }
+        }
+
+        if(!user){
+            return res.status(401).json({ error: 'Brugernavn eller password er forkert.' })
+        }
+        const hashedPasswordFromDB = user.password; // Det hashede password fra databasen
+        // Sammenlign det hashede password fra databasen med det, der blev sendt i login-forespørgslen
+        const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDB);
+        if (isPasswordValid) {
+            // Password matcher
+            const sessionId = createSession(user._id); // Brug userId fra user objektet
+            // Redirect brugeren til index.html i public-mappen
+            return res.status(200).json({ redirectUrl: '/public/index.html' });
+        } else {
+            // Password matcher ikke
+            return res.status(401).json({ error: 'Brugernavn eller password er forkert.' });
+        }
+    }
+    catch(error){
+        console.error('Error when user attempted to login: ', error);
+        res.status(500).json({ error: 'Der opstod en fejl under login.' });
+    }
+});
+
+app.post('/logout', (req, res) => {
+    const { sessionId } = req.body;
+    try {
+        deleteSession(sessionId); // Slet sessionen
+        return res.status(200).json({ message: 'Logout successful!' });
+    } catch(error) {
+        console.error('Error during logout:', error);
+        res.status(500).json({ error: 'An error occurred during logout.' });
+    }
 });
   
-//Endpoint for registrering
 app.post('/signup', async (req, res) => {
     const { username, password } = req.body;
     try{
