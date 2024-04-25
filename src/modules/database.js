@@ -16,11 +16,11 @@ async function connectToDatabase(){
     try{
         await client.connect();
         const db = client.db(dbname);
-        console.log("database connection was opened succesfully");
+        console.log("Database connection was opened succesfully");
         return db;
     }
     catch(error){
-        console.error("error when opening database connection: ", error);
+        console.error("Error when opening database connection: ", error);
         throw error;
     }
 }
@@ -28,10 +28,10 @@ async function connectToDatabase(){
 async function closeDatabaseConnection(){
     try{
         await client.close();
-        console.log("database connection succesfully closed");
+        console.log("Database connection succesfully closed");
     }
     catch(error){
-        console.error("error when closing database connection: ", error);
+        console.error("Error when closing database connection: ", error);
         throw error;
     }
 }
@@ -44,7 +44,7 @@ async function insertUser(user) {
         const collection = db.collection('users');
         //Insert user into users
         await collection.insertOne(user);
-        console.log('Bruger blev indsat i databasen');
+        console.log('Brugeren blev indsat i databasen');
     } catch (error) {
         console.error('Fejl ved indsættelse af bruger i databasen: ', error);
         throw error;
