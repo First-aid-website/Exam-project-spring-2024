@@ -9,6 +9,9 @@
 *:focus{
     outline: 3px solid var(--text-color);
 }
+*::selection {
+    background-color: var(--CTA-color-alt);
+}
 .hidden {
     display: none;
 }
@@ -63,6 +66,7 @@ header {
     width: 100dvw;
     height: 60px;
     background-color: var(--bg-color);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 10px 1em;
     z-index: 10;
 }
@@ -104,17 +108,20 @@ main {
 .sectionHeading {
     font-size: 30px;
 }
-#mainContent {
+.mainSection {
     position: relative;
     width: 100dvw;
     height: 90dvh;
+    min-height: 650px;
     justify-content: center;
+    padding: 1em 1.5em 0 1.5em;
+    z-index: 1;
+}
+#landingPage {
     background-image: url('../media/bck_cpr.webp');
     background-size: cover;
     background-position: center;
     color: var(--text-color-light);
-    padding: 1em 1.5em 0 1.5em;
-    z-index: 1;
 }
 
 .logo_small {
@@ -122,17 +129,19 @@ main {
 }
 
 h1 {
-    width: min-content;
     font-size: 32px;
     text-align: center;
     margin: 0 0 .3em 0;
+}
+#landingPage h1 {
+    width: min-content;
 }
 .headerTagLine {
     font-size: 30px;
     text-align: center;
     margin: 0 0 .2em 0;
 }
-#mainContent > p {
+.mainSection > p {
     width: 90%;
     max-width: 400px;
     font-size: 18px;
@@ -150,6 +159,9 @@ h1 {
     align-items: center;
     color: var(--text-color-light);
     font-size: 40px;
+}
+#arrowDown:focus {
+    outline: 3px solid var(--CTA-color);
 }
 
 .heroImage {
@@ -171,7 +183,7 @@ h1 {
     transition: 250ms ease-in-out;
     margin: 2em 0;
 }
-.ctaBtn:hover {
+.ctaBtn:hover, .ctaBtn:focus {
     outline: 3px solid var(--CTA-color);
     color: var(--CTA-color);
     background-color: transparent;
@@ -183,6 +195,7 @@ h1 {
     font-size: 18px;
     border-radius: 50px;
     text-align: center;
+    cursor: pointer;
     transition: 400ms ease-in-out;
     padding: .6em 1em;
 }
@@ -228,6 +241,41 @@ h1 {
     margin: 0 0 .1em 0;
 }
 
+.formWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    margin: 2em 0 0 0;
+}
+.formWrapper>* {
+    width: 100%;
+    max-width: 500px;
+}
+.contactInfo {
+    font-size: 18px;
+    margin: 0 0 1em 0;
+}
+.formWrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+.formWrapper form textarea {
+    resize: none;
+}
+.formWrapper form input, .formWrapper form textarea {
+    font-size: 18px;
+    padding: 2px;
+}
+.formWrapper form input[type=submit] {
+    border: none;
+    width: fit-content;
+    padding: .4em 2em;
+}
+
 footer {
     display: flex;
     justify-content: space-evenly;
@@ -269,7 +317,10 @@ footer {
         top: 92px;
         font-size: 30px;
     }
-    #mainContent > p {
+    .mainSection {
+        padding: 90px 1.5em 0 1.5em;
+    }
+    .mainSection > p {
         font-size: 20px;
     }
     h1 {
@@ -317,9 +368,13 @@ footer {
     .titleElements i {
         font-size: 50px;
     }
+
     footer {
         justify-content: center;
         gap: 2em;
+    }
+    .footerAligned {
+        align-items: center;
     }
     .logInBtn {
         width: 200px;
@@ -367,7 +422,8 @@ footer {
         border-bottom: 2px solid transparent;
         padding: 5px;
     }
-    .navigationList li>a:hover, .navigationList li:focus {
+    .navigationList li>a:hover, .navigationList li>a:focus {
+        outline: none;
         border-bottom: 2px solid var(--CTA-color-alt);
     }
     #courseCatalog {
@@ -379,7 +435,28 @@ footer {
         justify-content: center;
         margin: 6em 0 2em 0;
     }
+    
+    .formWrapper {
+        width: 80%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: unset;
+        gap: 6em;
+    }
+    .contactInfo {
+        max-width: max-content;
+        font-size: 25px;
+        margin: 0;
+    }
+    .formWrapper form {
+        text-align: left;
+    }
+
     footer {
         gap: 6em;
+    }
+    .footerAligned img {
+        width: 65px;
+        height: 65px;
     }
 }
