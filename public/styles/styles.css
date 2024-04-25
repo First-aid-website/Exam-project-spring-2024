@@ -246,6 +246,7 @@ footer {
     border-radius: 5px;
     background-color: var(--CTA-color);
     font-size: 16px;
+    text-align: center;
     cursor: pointer;
     transition: 100ms ease-in-out;
     padding: .5em 1em;
@@ -326,11 +327,48 @@ footer {
 }
 
 
-/* --------------------- Desktop Version -----------------------*/ 
-@media screen and (width >= 1700px) {
+/* --------------------- Laptop Version -----------------------*/ 
+@media screen and (width >= 1200px) {
     header {
         height: 100px;
         padding: 10px 4em 2px 4em;
+    }
+    #mobileMenuBtn {
+        display: none;
+    }
+    #mainMenu {
+        display: block;
+    }
+    .mainNavigation {
+        width: auto;
+        height: 100%;
+        position: static;
+        font-size: 20px;
+        background-color: transparent;
+        box-shadow: unset;
+    }
+    .navigationList {
+        height: 100%;
+        display: flex;
+        gap: 1.5em;
+    }
+    .navigationList li {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+    .navigationList li>a {
+        width: 100%;
+        height: auto;
+        display: inline-block;
+        font-size: 25px;
+        transition: 250ms ease-in-out;
+        border-bottom: 2px solid transparent;
+        padding: 5px;
+    }
+    .navigationList li>a:hover, .navigationList li:focus {
+        border-bottom: 2px solid var(--CTA-color-alt);
     }
     #courseCatalog {
         padding: 7em 1em;
