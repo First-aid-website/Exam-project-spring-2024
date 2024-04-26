@@ -322,7 +322,7 @@ h1 {
 }
 
 .loginForm {
-    width: 100%;
+    width: 90%;
     max-width: 500px;
     display: flex;
     flex-direction: column;
@@ -340,9 +340,11 @@ h1 {
     width: fit-content;
     font-size: 20px;
     border: none;
-    border-radius: 5px;
     padding: .2em 1em;
-    margin-block: 1.2em 0;
+    margin-block: 1em 0;
+}
+#createUserSection, #loginSection {
+    height: 85dvh;
 }
 
 footer {
