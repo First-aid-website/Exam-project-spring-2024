@@ -1,19 +1,74 @@
-<html lang="da">
+<!DOCTYPE html>
+<html lang="da-dk">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>Beredt Borgere | Login</title>
+    <meta name="title" content="Beredt Borgere | Førstehjælpskurser til Private Borgere og Ervherv">
+    <meta name="description" content="Beredt Borgere - Få livsreddende førstehjælpskurser til private borgere og erhverv. Bliv klar til at redde liv når uheld opstår med vores skræddersyede træning.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://tjuulm.dk">
+    <meta property="og:title" content="Beredt Borgere | Førstehjælpskurser til Private Borgere og Ervherv">
+    <meta property="og:description" content="Beredt Borgere - Få livsreddende førstehjælpskurser til private borgere og erhverv. Bliv klar til at redde liv når uheld opstår med vores skræddersyede træning.">
+    <meta property="og:image" content= "/public/media/beredtLogo_Dark">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
+    <link rel="stylesheet" href="/public/styles/styles.css">
+    <link rel="stylesheet" href="/public/styles/animation.css">
+    <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
+    <script src="/public/scripts/index.js" defer></script>
+    <script src="/public/scripts/mobileMenu.js" defer></script>
 </head>
 <body>
-    <h2>Login</h2>
-    <form id="loginForm">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-
+    <header>
+        <a href="/public/index.html" class="responsiveLogo">
+            <picture>
+            <source
+            srcset="/public/media/beredtLogo_Dark.webp"
+            width="167"
+            height="78"
+            media="(min-width: 725px)">
+            <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" title="Til forsiden for Beredt Borgere.dk" width="91" height="44">
+            </picture>
+        </a>
+        <i class="fas fa-bars" id="mobileMenuBtn"></i>
+        <nav id="mainMenu" class="mainNavigation hidden">
+            <ul class="navigationList">
+                <li><a href="/public/html/business.html">Erhverv</a></li>
+                <li><a href="/public/html/private.html">Privat</a></li>
+                <li><a href="/public/html/contact.html">Kontakt</a></li>
+                <li><a href="/public/html/about.html">Om os</a></li>
+            </ul>
+        </nav> 
+    </header>
+    <main>
+        <section id="loginSection" class="mainSection sectionWrapper">
+            <h1 class="moreSpace_block">Log på som personale</h1>
+            <form id="loginForm" class="loginForm">
+                <label for="username">Brugernavn:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Kodeord:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="readMore">Log Ind</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <div class="footerSection">
+            <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" class="companyLogo" width="100" height="50">
+            <a href="/public/html/signup.html" id="signUp" class="logInBtn"><i class="fas fa-user-plus"></i> Opret Bruger</a>
+        </div>
+        <ul class="footerSection" id="kontakt">
+            <li><i class="fas fa-map-marker-alt"></i> [Adresse]</li>
+            <li><a href="mailto:"><i class="far fa-envelope"></i> Email:[email@email.com]</a></li>
+            <li><a href="tel:"><i class="fas fa-phone"></i> Mobil: +45 41816360</a></li>
+            <li><i class="far fa-clock"></i> Tider: Man-Fre 09:00 - 17:00</li>
+            <li>CVR: [CVR]</li>
+        </ul>
+    </footer>
     <script src="/public/scripts/login.js"></script>
 </body>
 </html>
