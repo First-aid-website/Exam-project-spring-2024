@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Beredt Borgere | Forside</title>
+    <title>Beredt Borgere | Private Kurser</title>
     <meta name="title" content="Beredt Borgere | Førstehjælpskurser til Private Borgere og Ervherv">
     <meta name="description" content="Beredt Borgere - Få livsreddende førstehjælpskurser til private borgere og erhverv. Bliv klar til at redde liv når uheld opstår med vores skræddersyede træning.">
 
@@ -13,57 +13,71 @@
     <meta property="og:url" content="http://tjuulm.dk">
     <meta property="og:title" content="Beredt Borgere | Førstehjælpskurser til Private Borgere og Ervherv">
     <meta property="og:description" content="Beredt Borgere - Få livsreddende førstehjælpskurser til private borgere og erhverv. Bliv klar til at redde liv når uheld opstår med vores skræddersyede træning.">
-    <meta property="og:image" content= "media/kphLogo-wide">
+    <meta property="og:image" content= "/public/media/beredtLogo_Dark">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
     <link rel="stylesheet" href="/public/styles/styles.css">
-    <link rel="icon" href="media/pizzaSlice.png" type="image/svg">
+    <link rel="stylesheet" href="/public/styles/animation.css">
+    <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
     <script src="/public/scripts/index.js" defer></script>
+    <script src="/public/scripts/mobileMenu.js" defer></script>
 </head>
 <body>
     <header>
-        <a href="index.html" class="responsiveLogo">
+        <a href="/public/index.html" class="responsiveLogo">
             <picture>
-              <source
-              srcset="/public/media/"
-              width="150"
-              media="(min-width: 725px)">
-              <img src="/public/" alt="Logo for Beredt Borger.dk" height="60" width="60">
+            <source
+            srcset="/public/media/beredtLogo_Dark.webp"
+            width="167"
+            height="78"
+            media="(min-width: 725px)">
+            <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" title="Til forsiden for Beredt Borgere.dk" width="91" height="44">
             </picture>
-          </a>
-        <!-- <img src="" alt="Logo for Beredt Borger" class="companyLogo" width="60" height="60"> -->
-        <i class="fas fa-bars"></i>
-        <nav id="mainMenu">
-            <ul>
-                <li><a href="">Privat</a></li>
-                <li><a href="">Erhverv</a></li>
-                <li><a href="">Kontakt</a></li>
-                <li><a href="">Om os</a></li>
+        </a>
+        <i class="fas fa-bars" id="mobileMenuBtn"></i>
+        <nav id="mainMenu" class="mainNavigation hidden">
+            <ul class="navigationList">
+                <li><a href="/public/html/business.html">Erhverv</a></li>
+                <li><a href="/public/html/private.html">Privat</a></li>
+                <li><a href="/public/html/contact.html">Kontakt</a></li>
+                <li><a href="/public/html/about.html">Om os</a></li>
             </ul>
         </nav> 
     </header>
     <main>
-        <section id="mainContent" class="sectionWrapper">
-            <div class="heroImage" id="privateHeroImage"></div>
-            <h1>Kurser til private borgere</h1>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-        </section>
+        <div class="heroImage" id="privateHeroImage"></div>
         <section id="privateCourses" class="sectionWrapper">
-            <!-- Elementer udfyldes gennem databasen -->
+            <h1>Kurser til private borgere</h1>
+            <ul class="allCourseList">
+                <!-- Elementer udfyldes gennem databasen -->
+                <li class="courseWrapper">
+                    <div class="courseDetails">
+                        <h2 class="courseTitle">Færdselsrelateret Førstehjælp</h2>
+                        <p class="courseParticipants">Op til 16 deltagere</p>
+                        <h3 class="courseDuration">4 timer</h3>
+                        <h3 class="coursePrice">650kr. per person</h3>
+                        <a href="#" class="bookBtn readMore">Bestil Plads</a>
+                    </div>
+                    <ul class="courseTeachings">
+                        <li>Hjernerystelse</li>
+                        <li>Hjernerystelse</li>
+                        <li>Hjernerystelse</li>
+                        <li>Hjernerystelse</li>
+                        <li>Hjernerystelse</li>
+                        <li>Hjernerystelse</li>
+                        <li>Hjernerystelse</li>
+                    </ul>
+                </li>
+            </ul>
         </section>
     </main>
-    <footer>
-        <img src="" alt="Logo for Beredt Borger" class="companyLogo" width="50" height="50">
-        <button id="logIn" class="logInBtn">Personale Login</button>
+    <footer class="footerAligned">
+        <img src="/public/media/favIcon_Dark.webp" alt="Logo for Beredt Borger" class="companyLogo" width="50" height="50">
         <ul class="footerSection" id="kontakt">
-            <li>[Adresse]</li>
-            <li><a href="mailto:"><i class="far fa-envelope"></i>Email:[email@email.com]</a></li>
-            <li><a href="tel:"><i class="fas fa-phone"></i>Mobil: +45 41816360</a></li>
-            <li>Tider: Man-Fre 09:00 - 17:00</li>
+            <li><i class="fas fa-map-marker-alt"></i> [Adresse]</li>
+            <li><a href="mailto:"><i class="far fa-envelope"></i> Email:[email@email.com]</a></li>
+            <li><a href="tel:"><i class="fas fa-phone"></i> Mobil: +45 41816360</a></li>
+            <li><i class="far fa-clock"></i> Tider: Man-Fre 09:00 - 17:00</li>
             <li>CVR: [CVR]</li>
         </ul>
     </footer>
