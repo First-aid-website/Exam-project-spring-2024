@@ -76,11 +76,24 @@ async function fetchCourses() {
         throw error;
     }
 }
+async function fetchCoursesByType(type) {
+    try {
+        const db = await connectToDatabase();
+        const collection = db.collection('courses');
+        const courses = await collection.find({ type: type }).toArray();
+        return courses;
+    } catch(error) {
+        console.error('Fejl ved søgning efter kurser i databasen med typen: ' + type, error);
+        throw error;
+    }
+}
+
 
 module.exports = {
     connectToDatabase,
     closeDatabaseConnection,
     insertUser,
     findUser,
-    fetchCourses
+    fetchCourses,
+    fetchCoursesByType
 }
