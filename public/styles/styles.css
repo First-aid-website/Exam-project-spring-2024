@@ -547,6 +547,9 @@ footer {
         outline: none;
         border-bottom: 4px solid var(--CTA-color-alt);
     }
+    .activeUnderline {
+        border-bottom: 4px solid var(--CTA-color-alt) !important;
+    }
     .moreSpace_block {
         margin-block: 1.2em;
     }
