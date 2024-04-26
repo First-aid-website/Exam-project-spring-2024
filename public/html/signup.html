@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/public/styles/styles.css">
     <link rel="stylesheet" href="/public/styles/animation.css">
     <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
-    <script src="/public/scripts/index.js" defer></script>
+    <script src="/public/scripts/validateFeedback.js" defer></script>
     <script src="/public/scripts/mobileMenu.js" defer></script>
 </head>
 <body>
@@ -52,7 +52,10 @@
                 <input type="text" id="username" name="username" required>
                 <label for="password">Kodeord:</label>
                 <input type="password" id="password" name="password" required>
-                <button type="submit" class="readMore">Opret bruger</button>
+                <label for="confirmPassword">Bekræft Kodeord:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <ul id="passFeedbackList" style="color:crimson;"></ul>
+                <button type="submit" id="registerButton" class="readMore" disabled>Opret bruger</button>
             </form>
         </section>
     </main>

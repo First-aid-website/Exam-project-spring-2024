@@ -67,10 +67,14 @@ app.post('/logout', (req, res) => {
 });
   
 app.post('/signup', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, confirmPassword } = req.body;
     try{
         const passwordValidation = validatePassword(password);
         const passwordHash = hashPassword(password);
+
+        if (password !== confirmPassword){
+            return res.status(400).json({ error: 'Kodeordene matcher ikke'});
+        }
 
         if (!passwordValidation.isValid) {
             return res.status(400).json({ error: passwordValidation.message });
