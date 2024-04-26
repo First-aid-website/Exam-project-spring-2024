@@ -64,9 +64,23 @@ async function findUser(username){
     }
 }
 
+async function fetchCourses() {
+    try{
+        const db = await connectToDatabase();
+        const collection = db.collection('courses');
+        const courses = await collection.find({}).toArray();
+        return courses;
+    }
+    catch(error){
+        console.error('Fejl ved søgning efter kurser i databasen: ', error);
+        throw error;
+    }
+}
+
 module.exports = {
     connectToDatabase,
     closeDatabaseConnection,
     insertUser,
-    findUser
+    findUser,
+    fetchCourses
 }
