@@ -203,6 +203,11 @@ h1 {
 .readMore:active,.readMore:focus,.readMore:hover {
     background-color: var(--CTA-color);
 }
+.readMore:disabled {
+    background-color: transparent;
+    outline: 2px solid gray;
+    cursor:default;
+}
 
 #courseCatalog {
     padding: 5em 1em;
