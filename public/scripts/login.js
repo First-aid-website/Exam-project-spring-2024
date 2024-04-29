@@ -15,6 +15,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         });
 
         const data = await response.json();
+        console.log('Login response:', data); // Tilføj denne linje for at kontrollere svaret fra serveren
         if (response.ok) {
             window.location.href = data.redirectUrl;
         } else {
