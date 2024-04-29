@@ -203,6 +203,11 @@ h1 {
 .readMore:active,.readMore:focus,.readMore:hover {
     background-color: var(--CTA-color);
 }
+.readMore:disabled {
+    background-color: transparent;
+    outline: 2px solid gray;
+    cursor:default;
+}
 
 #courseCatalog {
     padding: 5em 1em;
@@ -345,6 +350,9 @@ h1 {
 }
 #createUserSection, #loginSection {
     height: 85dvh;
+}
+#passFeedbackList li::selection {
+    background-color: lightgrey;
 }
 
 footer {
@@ -547,6 +555,9 @@ footer {
         outline: none;
         border-bottom: 4px solid var(--CTA-color-alt);
     }
+    .activeUnderline {
+        border-bottom: 4px solid var(--CTA-color-alt) !important;
+    }
     .moreSpace_block {
         margin-block: 1.2em;
     }
@@ -560,7 +571,7 @@ footer {
     .courseCategories {
         flex-direction: row;
         justify-content: center;
-        margin: 6em 0 2em 0;
+        margin-block: 6em 2em;
     }
     
     .formWrapper {
