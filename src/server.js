@@ -3,25 +3,35 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const { connectToDatabase, closeDatabaseConnection, insertUser, findUser } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
 const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
-const { createSession, getSession, deleteSession } = require('./modules/session');
+const { createSession, getSession, deleteSession, validateAndUpdateSession } = require('./modules/session');
 const { setCookie, getCookie } = require('./modules/cookies');
 
 //Opret en Express-app
 const app = express();
 app.use(cors());
 app.use(express.json()); // Parse JSON bodies
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); //Til redirects
 const port = 3000;
+
+function validateSessionMiddleware(req, res, next) {
+    const sessionId = req.cookies.sessionId; // Antag at sessionId gemmes i en cookie
+    console.log("SessionId fra anmodning:", sessionId);
+    if (!sessionId || !validateAndUpdateSession(sessionId)) {
+        return res.status(401).json({ error: 'Session udløbet eller er ugyldig.' });
+    }
+    next(); // Hvis sessionen er gyldig, fortsæt til næste middleware eller rutehåndtering
+}
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try{
         const user = await findUser(username);
-
         console.log('User:', user);
 
         // Check om brugeren har aktiveret MFA
@@ -42,7 +52,10 @@ app.post('/login', async (req, res) => {
         if (isPasswordValid) {
             // Password matcher
             const sessionId = createSession(user._id); // Brug userId fra user objektet
+            // Set the session cookie
+            setCookie(res, 'sessionId', sessionId, { path: '/' }); // Set the session cookie
             // Redirect brugeren til index.html i public-mappen
+            console.log(res.getHeaders()); // Log the response headers
             return res.status(200).json({ redirectUrl: '/public/index.html' });
         } else {
             // Password matcher ikke
@@ -99,9 +112,21 @@ app.get('/courses', (req, res) => {
 });
   
 //Endpoint for indsættelse af kursus
-app.post('/courses', (req, res) => {
-    //tilføj førstehjælpskurser
+app.post('/courses', validateSessionMiddleware, (req, res) => {
+    try {
+        console.log('Modtaget POST-anmodning til /courses');
+        const courseData = req.body;
+        console.log('Kursusdata modtaget:', courseData);
+        // Eksempel: Indsæt kursusdata i din database (dette er fiktivt og skal tilpasses din database)
+        // Her kan du tilføje logikken til at indsætte kursusdata i din database
+        // Eksempel: Returner en succesbesked og det oprettede kursusdata
+        res.status(201).json({ message: 'Kursus oprettet', course: courseData });
+    } catch (error) {
+        console.error('Fejl ved indsættelse af kursus:', error);
+        res.status(500).json({ error: 'Der opstod en fejl under indsættelse af kursus.' });
+    }
 });
+
 
 //Start serveren
 app.listen(port, () => {
