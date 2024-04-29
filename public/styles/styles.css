@@ -351,6 +351,9 @@ h1 {
 #createUserSection, #loginSection {
     height: 85dvh;
 }
+#passFeedbackList li::selection {
+    background-color: lightgrey;
+}
 
 footer {
     display: flex;
