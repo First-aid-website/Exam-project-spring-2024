@@ -1,10 +1,9 @@
+const USERNAME_FIELD = document.getElementById("username");
 const PASSWORD_FIELD = document.getElementById("password");
 const CONFIRM_PASSWORD_FIELD = document.getElementById("confirmPassword");
 const OUTPUT_LIST = document.getElementById("passFeedbackList");
 const REGISTER_BUTTON = document.getElementById("registerButton");
-
 REGISTER_BUTTON.disabled = true;
-
 const PASSWORD_CRITERIA = {
     minLength: {
         regex: /^.{16,}$/,
@@ -28,19 +27,33 @@ for (const criterion in PASSWORD_CRITERIA) {
     addFeedback(PASSWORD_CRITERIA[criterion].message);
 }
 
-PASSWORD_FIELD.addEventListener("input", validatePassword);
-CONFIRM_PASSWORD_FIELD.addEventListener("input", validatePassword);
+PASSWORD_FIELD.addEventListener("input", toggleButton);
+CONFIRM_PASSWORD_FIELD.addEventListener("input", toggleButton);
 CONFIRM_PASSWORD_FIELD.addEventListener("input", validatePasswordsMatch);
+USERNAME_FIELD.addEventListener("input", toggleButton);
+USERNAME_FIELD.addEventListener("input", validateUsername);
+const MAX_USERNAME_LENGTH = 20;
 
+function validateUsername() {
+    let username = USERNAME_FIELD.value;
+
+    username = username.replace(/[^a-zæøåA-ZÆØÅ0-9]/g, '');
+
+    if (username.length > MAX_USERNAME_LENGTH) {
+        username = username.slice(0, MAX_USERNAME_LENGTH);
+    }
+
+    USERNAME_FIELD.value = username;
+}
 
 let passwordMatchMessageShown = false;
 
-function validatePassword() {
+function toggleButton() {
     const password = PASSWORD_FIELD.value;
     const isValid = validatePass(password);
     const matching = validatePasswordsMatch();
     
-    if (!isValid || !matching || password === "" || CONFIRM_PASSWORD_FIELD.value === "") {
+    if (!isValid || !matching || password === "" || CONFIRM_PASSWORD_FIELD.value === "" || USERNAME_FIELD.value === "") {
         REGISTER_BUTTON.disabled = true;
     } else {
         REGISTER_BUTTON.disabled = false;

@@ -49,11 +49,11 @@
             <h1 class="moreSpace_block">Opret ny bruger</h1>
             <form id="registrationForm" class="loginForm">
                 <label for="username">Brugernavn:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" title="Må kun indeholde tal og bogstaver, og maksimalt være 20 tegn" required>
                 <label for="password">Kodeord:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" title="Skriv dit kodeord" required>
                 <label for="confirmPassword">Bekræft Kodeord:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <input type="password" id="confirmPassword" name="confirmPassword" title="Bekræft dit kodeord" required>
                 <ul id="passFeedbackList" style="color:crimson;"></ul>
                 <button type="submit" id="registerButton" class="readMore" disabled>Opret bruger</button>
             </form>

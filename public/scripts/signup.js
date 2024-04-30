@@ -4,6 +4,7 @@ document.getElementById("registrationForm").addEventListener("submit", async fun
     const formData = new FormData(this);
     const username = formData.get("username");
     const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
     
     try {
         const response = await fetch("http://localhost:3000/signup", {
@@ -11,7 +12,7 @@ document.getElementById("registrationForm").addEventListener("submit", async fun
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password, confirmPassword })
         });
 
         const data = await response.json();
