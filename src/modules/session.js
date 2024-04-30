@@ -1,20 +1,17 @@
-const sessions = new Map();
+const sessions = {};
 const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutter i millisekunder
 
 function createSession(userId) {
     const sessionId = generateSessionId();
-    sessions.set(sessionId, { userId });
+    sessions[sessionId] = { userId };
     return sessionId;
 }
-
 function getSession(sessionId) {
-    return sessions.get(sessionId);
+    return sessions[sessionId];
 }
-
 function deleteSession(sessionId) {
-    sessions.delete(sessionId);
+    delete sessions[sessionId];
 }
-
 function validateAndUpdateSession(sessionId) {
     const session = sessions.get(sessionId);
     if (session && session.expirationTime > Date.now()) {
@@ -27,12 +24,10 @@ function validateAndUpdateSession(sessionId) {
         return false; // Sessionen er ikke gyldig
     }
 }
-
 function generateSessionId() {
     // Implementer logik til at generere et unikt session ID
     return Math.random().toString(36).substring(2, 15);
 }
-
 module.exports = {
     createSession,
     getSession,

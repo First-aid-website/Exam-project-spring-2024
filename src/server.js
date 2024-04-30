@@ -9,24 +9,26 @@ const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
 const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
 const { createSession, getSession, deleteSession, validateAndUpdateSession } = require('./modules/session');
-const { setCookie, getCookie } = require('./modules/cookies');
+//const { setCookie, getCookie } = require('./modules/cookies');
 
 //Opret en Express-app
 const app = express();
-app.use(cors());
+app.use(cors({
+    credentials: true
+}));
 app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); //Til redirects
 const port = 3000;
 
-function validateSessionMiddleware(req, res, next) {
-    const sessionId = req.cookies.sessionId; // Antag at sessionId gemmes i en cookie
-    console.log("SessionId fra anmodning:", sessionId);
-    if (!sessionId || !validateAndUpdateSession(sessionId)) {
-        return res.status(401).json({ error: 'Session udløbet eller er ugyldig.' });
-    }
-    next(); // Hvis sessionen er gyldig, fortsæt til næste middleware eller rutehåndtering
-}
+// function validateSessionMiddleware(req, res, next) {
+//     const sessionId = req.cookies.sessionId; // Antag at sessionId gemmes i en cookie
+//     console.log("SessionId fra anmodning:", sessionId);
+//     if (!sessionId || !validateAndUpdateSession(sessionId)) {
+//         return res.status(401).json({ error: 'Session udløbet eller er ugyldig.' });
+//     }
+//     next(); // Hvis sessionen er gyldig, fortsæt til næste middleware eller rutehåndtering
+// }
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -53,7 +55,7 @@ app.post('/login', async (req, res) => {
             // Password matcher
             const sessionId = createSession(user._id); // Brug userId fra user objektet
             // Set the session cookie
-            setCookie(res, 'sessionId', sessionId, { path: '/' }); // Set the session cookie
+            setCookie(res, 'sessionId', sessionId, { path: '/', maxAge: 604800000 } ); // Set the session cookie
             // Redirect brugeren til index.html i public-mappen
             console.log(res.getHeaders()); // Log the response headers
             return res.status(200).json({ redirectUrl: '/public/index.html' });
@@ -116,7 +118,7 @@ app.get('/courses', (req, res) => {
 });
   
 //Endpoint for indsættelse af kursus
-app.post('/courses', validateSessionMiddleware, (req, res) => {
+app.post('/courses', (req, res) => {
     try {
         console.log('Modtaget POST-anmodning til /courses');
         const courseData = req.body;

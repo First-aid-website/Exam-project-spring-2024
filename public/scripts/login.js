@@ -16,13 +16,36 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
         const data = await response.json();
         console.log('Login response:', data); // Tilføj denne linje for at kontrollere svaret fra serveren
+        
         if (response.ok) {
-            window.location.href = data.redirectUrl;
+            // Hent session-ID fra cookien
+            const sessionId = getCookieValue("sessionId");
+            console.log("Session ID fra cookien:", sessionId);
+
+            // Omdiriger til den angivne URL
+            //window.location.href = data.redirectUrl;
         } else {
-            throw new Error(data.error);
+            // Håndter forskellige typer af fejl fra serveren
+            if (response.status === 401) {
+                throw new Error("Forkert brugernavn eller adgangskode.");
+            } else if (response.status === 500) {
+                throw new Error("Der opstod en serverfejl. Prøv igen senere.");
+            } else {
+                throw new Error("Der opstod en ukendt fejl.");
+            }
         }
     } catch (error) {
-        console.error("Error:", error);
-        alert(error.message); // Display the error message
+        console.error("Fejl:", error);
+        alert(error.message); // Vis fejlmeddelelse til brugeren
     }
 });
+
+// Hjælpefunktion til at hente værdien af en cookie baseret på navnet
+function getCookieValue(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) {
+        return match[2];
+    } else {
+        return null;
+    }
+}
