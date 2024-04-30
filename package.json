@@ -1,6 +1,13 @@
 {
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
-    "path": "^0.12.7"
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "mongodb": "^6.5.0",
+    "path": "^0.12.7",
+    "sesion": "^0.0.0",
+    "speakeasy": "^2.0.0"
   }
 }

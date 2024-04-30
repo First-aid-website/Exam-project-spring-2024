@@ -84,13 +84,16 @@ app.post('/signup', async (req, res) => {
     try{
         const passwordValidation = validatePassword(password);
         const passwordHash = hashPassword(password);
+        const usernameRegex = /^[a-zæøåA-ZÆØÅ0-9]{1,20}$/;
 
-        if (password !== confirmPassword){
-            return res.status(400).json({ error: 'Kodeordene matcher ikke'});
-        }
-
+        if (!usernameRegex.test(username)) {
+            return res.status(400).json({ error: 'Brugernavnet er ugyldigt' });
+        }        
         if (!passwordValidation.isValid) {
             return res.status(400).json({ error: passwordValidation.message });
+        }
+        if (confirmPassword !== password){
+            return res.status(400).json({ error: 'Kodeordene matcher ikke'});
         }
         
         const user = {
