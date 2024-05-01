@@ -32,20 +32,6 @@ PASSWORD_FIELD.addEventListener("input", toggleButton);
 CONFIRM_PASSWORD_FIELD.addEventListener("input", toggleButton);
 CONFIRM_PASSWORD_FIELD.addEventListener("input", validatePasswordsMatch);
 USERNAME_FIELD.addEventListener("input", toggleButton);
-USERNAME_FIELD.addEventListener("input", validateUsername);
-const MAX_USERNAME_LENGTH = 20;
-
-function validateUsername() {
-    let username = USERNAME_FIELD.value;
-
-    username = username.replace(/[^a-zæøåA-ZÆØÅ0-9]/g, '');
-
-    if (username.length > MAX_USERNAME_LENGTH) {
-        username = username.slice(0, MAX_USERNAME_LENGTH);
-    }
-
-    USERNAME_FIELD.value = username;
-}
 
 let passwordMatchMessageShown = false;
 

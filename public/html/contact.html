@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/public/styles/styles.css">
     <link rel="stylesheet" href="/public/styles/animation.css">
     <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
-    <script src="/public/scripts/index.js" defer></script>
+    <script src="/public/scripts/inputSanitization.js" defer></script>
     <script src="/public/scripts/mobileMenu.js" defer></script>
 </head>
 <body>
@@ -57,9 +57,9 @@
                 </aside>
                 <form action="">
                     <p>Udfyld formen nedenfor, og vi kontakter dig så hurtigt som muligt</p>
-                    <input type="text" placeholder="Dit navn..." title="Skriv dit navn" required>
-                    <input type="email" placeholder="Din email..." title="Skriv din email" required>
-                    <textarea rows="8" placeholder="Besked..." title="Skriv din besked" required></textarea>
+                    <input type="text" id="name" placeholder="Dit fulde navn" title="Skriv dit fulde navn" required>
+                    <input type="email" id="mail" placeholder="Din email" title="Skriv din email" required>
+                    <textarea rows="8" id="message" placeholder="Besked" title="Skriv din besked" required></textarea>
                     <input type="submit" class="readMore" value="Send besked">
                 </form>
             </div>

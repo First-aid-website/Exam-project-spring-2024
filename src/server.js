@@ -86,11 +86,11 @@ app.post('/signup', async (req, res) => {
     try{
         const passwordValidation = validatePassword(password);
         const passwordHash = hashPassword(password);
-        const usernameRegex = /^[a-zæøåA-ZÆØÅ0-9]{1,20}$/;
+        const usernameRegex = /^[a-zæøåA-ZÆØÅ0-9]{4,20}$/;
 
         if (!usernameRegex.test(username)) {
             return res.status(400).json({ error: 'Brugernavnet er ugyldigt' });
-        }        
+        } 
         if (!passwordValidation.isValid) {
             return res.status(400).json({ error: passwordValidation.message });
         }
