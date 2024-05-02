@@ -21,6 +21,7 @@
     <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
     <script src="/public/scripts/index.js" defer></script>
     <script src="/public/scripts/mobileMenu.js" defer></script>
+    <script src="/public/scripts/dataFetch-course-private.js"></script>
 </head>
 <body>
     <header>
@@ -48,7 +49,7 @@
         <div class="heroImage" id="privateHeroImage"></div>
         <section id="privateCourses" class="sectionWrapper">
             <h1 class="moreSpace_block">Kurser til private borgere</h1>
-            <ul class="allCourseList">
+            <ul class="allCourseList" id="privateCourseList">
                 <!-- Elementer udfyldes gennem databasen -->
                 <li class="courseWrapper">
                     <div class="courseDetails">

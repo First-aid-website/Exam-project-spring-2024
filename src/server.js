@@ -9,6 +9,7 @@ const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
 const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
 const { createSession, getSession, deleteSession, validateAndUpdateSession } = require('./modules/session');
+const { fetchCourses, fetchCoursesByType } = require('./modules/database');
 //const { setCookie, getCookie } = require('./modules/cookies');
 
 //Opret en Express-app
@@ -133,6 +134,30 @@ app.post('/courses', (req, res) => {
     } catch (error) {
         console.error('Fejl ved indsættelse af kursus:', error);
         res.status(500).json({ error: 'Der opstod en fejl under indsættelse af kursus.' });
+    }
+});
+
+// Endpoint for hentning af kurser for private
+app.get('/courses/private', async (req, res) => {
+    try {
+        // Fetch courses with type "private" from the database
+        const privateCourses = await fetchCoursesByType('private');
+        res.status(201).json(privateCourses); // Send the fetched courses as JSON response
+    } catch (error) {
+        console.error('Fejl ved hentning af kurser til private:', error);
+        res.status(500).json({ error: 'En fejl opstod under hentning af kurser for private.' });
+    }
+});
+
+// Endpoint for hentning af kurser for erhverv
+app.get('/courses/erhverv', async (req, res) => {
+    try {
+        // Fetch courses with type "erhverv" from the database
+        const erhvervCourses = await fetchCoursesByType('erhverv');
+        res.status(201).json(erhvervCourses); // Send the fetched courses as JSON response
+    } catch (error) {
+        console.error('Fejl ved hentning af kurser til erhverv:', error);
+        res.status(500).json({ error: 'En fejl opstod under hentning af kurser for private.' });
     }
 });
 
