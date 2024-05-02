@@ -23,7 +23,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
             console.log("Session ID fra cookien:", sessionId);
 
             // Omdiriger til den angivne URL
-            //window.location.href = data.redirectUrl;
+            window.location.href = data.redirectUrl;
         } else {
             // Håndter forskellige typer af fejl fra serveren
             if (response.status === 401) {

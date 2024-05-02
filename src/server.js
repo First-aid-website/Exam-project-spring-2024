@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const { connectToDatabase, closeDatabaseConnection, insertUser, findUser } = require('./modules/database');
+const { insertUser, findUser, insertCourse } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
 const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
@@ -56,7 +56,7 @@ app.post('/login', async (req, res) => {
             // Password matcher
             const sessionId = createSession(user._id); // Brug userId fra user objektet
             // Set the session cookie
-            setCookie(res, 'sessionId', sessionId, { path: '/', maxAge: 604800000 } ); // Set the session cookie
+            //setCookie(res, 'sessionId', sessionId, { path: '/', maxAge: 604800000 } ); // Set the session cookie
             // Redirect brugeren til index.html i public-mappen
             console.log(res.getHeaders()); // Log the response headers
             return res.status(200).json({ redirectUrl: '/public/index.html' });
@@ -106,7 +106,6 @@ app.post('/signup', async (req, res) => {
 
         // await connectToDatabase();
         await insertUser(user);
-        await closeDatabaseConnection();
 
         res.status(201).json({ message: 'Brugeren oprettet' }); // Return a success message
     }
@@ -122,14 +121,13 @@ app.get('/courses', (req, res) => {
 });
   
 //Endpoint for indsættelse af kursus
-app.post('/courses', (req, res) => {
+app.post('/courses', async (req, res) => {
     try {
         console.log('Modtaget POST-anmodning til /courses');
         const courseData = req.body;
         console.log('Kursusdata modtaget:', courseData);
-        // Eksempel: Indsæt kursusdata i din database (dette er fiktivt og skal tilpasses din database)
-        // Her kan du tilføje logikken til at indsætte kursusdata i din database
-        // Eksempel: Returner en succesbesked og det oprettede kursusdata
+        // Indsæt kursusdata i databasen
+        await insertCourse(courseData);
         res.status(201).json({ message: 'Kursus oprettet', course: courseData });
     } catch (error) {
         console.error('Fejl ved indsættelse af kursus:', error);

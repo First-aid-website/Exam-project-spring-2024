@@ -64,6 +64,18 @@ async function findUser(username){
     }
 }
 
+async function insertCourse(course) {
+    try {
+        const db = await connectToDatabase();
+        const collection = db.collection('courses');
+        await collection.insertOne(course);
+        console.log('Kurset blev indsat i databasen');
+    } catch (error) {
+        console.error('Fejl ved indsættelse af kursus i databasen: ', error);
+        throw error;
+    }
+}
+
 async function fetchCourses() {
     try{
         const db = await connectToDatabase();
@@ -95,5 +107,6 @@ module.exports = {
     insertUser,
     findUser,
     fetchCourses,
-    fetchCoursesByType
+    fetchCoursesByType,
+    insertCourse
 }
