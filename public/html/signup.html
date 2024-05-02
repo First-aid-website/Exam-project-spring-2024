@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/public/styles/animation.css">
     <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
     <script src="/public/scripts/validateFeedback.js" defer></script>
+    <script src="/public/scripts/inputSanitization.js" defer></script>
     <script src="/public/scripts/mobileMenu.js" defer></script>
 </head>
 <body>
@@ -49,12 +50,13 @@
             <h1 class="moreSpace_block">Opret ny bruger</h1>
             <form id="registrationForm" class="loginForm">
                 <label for="username">Brugernavn:</label>
-                <input type="text" id="username" name="username" title="Må kun indeholde tal og bogstaver, og maksimalt være 20 tegn" required>
+                <input type="text" id="username" name="username" title="Må kun indeholde tal og bogstaver, og skal være mellem 4 og 20 tegn" required>
                 <label for="password">Kodeord:</label>
                 <input type="password" id="password" name="password" title="Skriv dit kodeord" required>
+                <ul id="passFeedbackListPassword" style="color:crimson;"></ul>
                 <label for="confirmPassword">Bekræft Kodeord:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" title="Bekræft dit kodeord" required>
-                <ul id="passFeedbackList" style="color:crimson;"></ul>
+                <ul id="passFeedbackListMatch" style="color:crimson;"></ul>
                 <button type="submit" id="registerButton" class="readMore" disabled>Opret bruger</button>
             </form>
         </section>

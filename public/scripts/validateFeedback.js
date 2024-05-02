@@ -1,7 +1,8 @@
 const USERNAME_FIELD = document.getElementById("username");
 const PASSWORD_FIELD = document.getElementById("password");
 const CONFIRM_PASSWORD_FIELD = document.getElementById("confirmPassword");
-const OUTPUT_LIST = document.getElementById("passFeedbackList");
+const PASSWORD_FEEDBACK_LIST = document.getElementById("passFeedbackListPassword");
+const MATCH_FEEDBACK_LIST = document.getElementById("passFeedbackListMatch");
 const REGISTER_BUTTON = document.getElementById("registerButton");
 REGISTER_BUTTON.disabled = true;
 const PASSWORD_CRITERIA = {
@@ -24,27 +25,13 @@ const PASSWORD_CRITERIA = {
 };
 
 for (const criterion in PASSWORD_CRITERIA) {
-    addFeedback(PASSWORD_CRITERIA[criterion].message);
+    addFeedback(PASSWORD_CRITERIA[criterion].message, PASSWORD_FEEDBACK_LIST);
 }
 
 PASSWORD_FIELD.addEventListener("input", toggleButton);
 CONFIRM_PASSWORD_FIELD.addEventListener("input", toggleButton);
 CONFIRM_PASSWORD_FIELD.addEventListener("input", validatePasswordsMatch);
 USERNAME_FIELD.addEventListener("input", toggleButton);
-USERNAME_FIELD.addEventListener("input", validateUsername);
-const MAX_USERNAME_LENGTH = 20;
-
-function validateUsername() {
-    let username = USERNAME_FIELD.value;
-
-    username = username.replace(/[^a-zæøåA-ZÆØÅ0-9]/g, '');
-
-    if (username.length > MAX_USERNAME_LENGTH) {
-        username = username.slice(0, MAX_USERNAME_LENGTH);
-    }
-
-    USERNAME_FIELD.value = username;
-}
 
 let passwordMatchMessageShown = false;
 
@@ -64,48 +51,44 @@ function validatePasswordsMatch() {
     const password = PASSWORD_FIELD.value;
     const confirmPassword = CONFIRM_PASSWORD_FIELD.value;
     const message = "*Kodeordene er ikke ens";
-
-    let matching = true;
+    MATCH_FEEDBACK_LIST.innerHTML = "";
 
     if (password !== confirmPassword && confirmPassword !== "") {
-        matching = false;
-        if (!passwordMatchMessageShown) {
-            addFeedback(message);
-            passwordMatchMessageShown = true;
-        }
+        addFeedback(message, MATCH_FEEDBACK_LIST);
+        passwordMatchMessageShown = true;
+        return false;
     } else {
-        removeFeedback(message);
+        removeFeedback(message, MATCH_FEEDBACK_LIST);
         passwordMatchMessageShown = false;
+        return true;
     }
-
-    return matching;
 }
 
 function validatePass(password) {
     let isValid = true;
-    OUTPUT_LIST.innerHTML = "";
+    PASSWORD_FEEDBACK_LIST.innerHTML = "";
 
     for (const criterion in PASSWORD_CRITERIA) {
         if (!PASSWORD_CRITERIA[criterion].regex.test(password)) {
-            addFeedback(PASSWORD_CRITERIA[criterion].message);
+            addFeedback(PASSWORD_CRITERIA[criterion].message, PASSWORD_FEEDBACK_LIST);
             isValid = false;
         } else {
-            removeFeedback(PASSWORD_CRITERIA[criterion].message);
+            removeFeedback(PASSWORD_CRITERIA[criterion].message, PASSWORD_FEEDBACK_LIST);
         }
     }
 
     return isValid;
 }
 
-function addFeedback(message) {
+function addFeedback(message, feedbackList) {
     const feedback = document.createElement("li");
     feedback.textContent = message;
     feedback.classList.add("invalid-feedback");
-    OUTPUT_LIST.appendChild(feedback);
+    feedbackList.appendChild(feedback);
 }
 
-function removeFeedback(message) {
-    const feedbackItems = OUTPUT_LIST.querySelectorAll("li");
+function removeFeedback(message, feedbackList) {
+    const feedbackItems = feedbackList.querySelectorAll("li");
     feedbackItems.forEach(item => {
         if (item.textContent === message) {
             item.remove();
