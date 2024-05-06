@@ -125,6 +125,10 @@ app.post('/courses', async (req, res) => {
     try {
         console.log('Modtaget POST-anmodning til /courses');
         const courseData = req.body;
+        if (typeof courseData.teachings === 'string') {
+            // Adskil værdier efter mellemrum eller linjeskift
+            courseData.teachings = courseData.teachings.split(',');
+        }
         console.log('Kursusdata modtaget:', courseData);
         // Indsæt kursusdata i databasen
         await insertCourse(courseData);
