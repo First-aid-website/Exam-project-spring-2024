@@ -386,6 +386,9 @@ h1 {
 .modalForm > input {
     width: 100%;
 }
+.modalForm input {
+    padding-inline-start: 2px;
+}
 .numberInput {
     font-size: 18px;
     max-width: 80px;
@@ -404,6 +407,10 @@ h1 {
 }
 .gridWrapper > label {
     width: max-content;
+}
+.flexWrapper {
+    display: flex;
+    column-gap: 5px;
 }
 .closeModalButton {
     position: absolute;

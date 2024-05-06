@@ -60,6 +60,7 @@ if (MODAL) {
     });
 }
 
+//----------------------------------- Modal form logic ------------------------------//
 function checkForInputs() {
     const inputFields = document.querySelectorAll('#courseForm [required]');
     for (let i = 0; i < inputFields.length; i++) {
@@ -74,4 +75,33 @@ function clearInputs() {
     inputFields.forEach(function(input) {
         input.value = '';
     });
+}
+
+const MONTH_DROPDOWN = document.getElementById("dateMonth");
+const YEAR_DROPDOWN = document.getElementById("dateYear");
+
+if (YEAR_DROPDOWN && MONTH_DROPDOWN) {
+    const CURRENT_MONTH = new Date().getMonth();
+    const CURRENT_YEAR = new Date().getFullYear();
+
+    MONTH_DROPDOWN.options[CURRENT_MONTH].selected = true;
+    for (let i = 0; i < 6; i++) {
+        const option = document.createElement("option");
+        const year = CURRENT_YEAR + i;
+        option.value = year;
+        option.text = year;
+        YEAR_DROPDOWN.add(option);
+    }
+    
+
+    function updateMonthOptions() {
+        let selectedYear = parseInt(YEAR_DROPDOWN.value);
+        let disabledMonths = selectedYear === CURRENT_YEAR ? CURRENT_MONTH : -1;
+        for (let i = 0; i < MONTH_DROPDOWN.options.length; i++) {
+            MONTH_DROPDOWN.options[i].disabled = i < disabledMonths;
+        }
+    }
+
+    updateMonthOptions();
+    YEAR_DROPDOWN.addEventListener("change", updateMonthOptions);
 }

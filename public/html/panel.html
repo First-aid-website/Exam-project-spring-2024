@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Beredt Borgere | Forside</title>
+    <title>Beredt Borgere | Admin Panel</title>
     <meta name="title" content="Beredt Borgere | Førstehjælpskurser til Private Borgere og Ervherv">
     <meta name="description" content="Beredt Borgere - Få livsreddende førstehjælpskurser til private borgere og erhverv. Bliv klar til at redde liv når uheld opstår med vores skræddersyede træning.">
 
@@ -55,19 +55,48 @@
                 <h2>Opret kursus</h2>
                 <i id="closeModal" class="fas fa-x closeModalButton" tabindex="0" title="Luk kursusoprettelse (Esc)"></i>
                 <label for="title">Titel:</label><br>
-                <input type="text" id="title" name="title" title="Navnet på det nye kursus" required><br>
+                <input type="text" id="title" name="title" title="Navnet på det nye kursus" placeholder="Kursus titel" required><br>
                 <label for="type">Type:</label><br>
-                <select id="type" name="type" required>
+                <select id="type" name="type">
                     <option value="private">Private</option>
                     <option value="erhverv">Erhverv</option>
-                </select><br>
+                </select>
                 <div class="gridWrapper">
                     <label for="participants">Antal deltagere:</label>
-                    <input type="number" id="participants" class="numberInput" name="participants" title="Antal kursusdeltagere" placeholder="0" required>
-                    <label for="duration">Varighed (timer):</label>
-                    <input type="number" id="durationHrs" class="numberInput" name="duration" title="Antal timer" placeholder="0" required>
-                    <label for="duration">Varighed (minutter):</label>
-                    <input type="number" id="durationMin" class="numberInput" name="duration" title="Antal minutter" placeholder="0" required>
+                    <input type="number" id="participants" class="numberInput" name="participants" title="Antal kursusdeltagere (0-99)" placeholder="0" required>
+                    <label for="date">Dato:</label>
+                    <div class="flexWrapper">
+                        <input type="number" id="dateDay" class="numberInput" name="date" title="Antal timer" placeholder="dd" required>
+                        <select id="dateMonth" name="date">
+                            <option value="0" disabled>Januar</option>
+                            <option value="1" disabled>Februar</option>
+                            <option value="2" disabled>Marts</option>
+                            <option value="3" disabled>April</option>
+                            <option value="4" disabled>Maj</option>
+                            <option value="5" disabled>Juni</option>
+                            <option value="6" disabled>Juli</option>
+                            <option value="7" disabled>August</option>
+                            <option value="8" disabled>September</option>
+                            <option value="9" disabled>Oktober</option>
+                            <option value="10" disabled>November</option>
+                            <option value="11" disabled>December</option>
+                        </select>
+                        <select id="dateYear" name="date">
+                            <!-- Bliver dynamisk udfyldt med de næste 5 år -->
+                        </select>
+                    </div>
+                    <label for="startTime">Start tidspunkt:</label>
+                    <div class="flexWrapper">
+                        <input type="number" id="startTimeHrs" class="numberInput" name="startTime" title="Start time" placeholder="Time" required>
+                        <span>:</span>
+                        <input type="number" id="startTimeMin" class="numberInput" name="startTime" title="Start minut" placeholder="Minut" required>
+                    </div>
+                    <label for="endTime">Slut tidspunkt:</label>
+                    <div class="flexWrapper">
+                        <input type="number" id="endTimeHrs" class="numberInput" name="endTime" title="Slut time" placeholder="Time" required>
+                        <span>:</span>
+                        <input type="number" id="endTimeMin" class="numberInput" name="endTime" title="Slut minut" placeholder="Minut" required>
+                    </div>
                     <label for="price">Pris (kr):</label>
                     <input type="number" id="price" class="numberInput" name="price" title="Pris for kursus" placeholder="0" required>
                 </div>
