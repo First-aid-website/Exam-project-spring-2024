@@ -1,30 +1,56 @@
-const USERNAME_LOGIN = document.getElementById('username');
-const NAME_FORM = document.getElementById('name');
-const USERNAME_REGEX = /[^a-zæøåA-ZÆØÅ0-9]/g;
-const NAME_REGEX = /[^a-zæøåA-ZÆØÅ\s]/g;
-const MAX_USERNAME_LENGTH = 20;
-const MAX_NAME_LENGTH = 50;
-
-function restrictInput(input, regex, maxLength) {
-    let value = input.value;
-    
-    value = value.replace(regex, '');
-    
-    if (value.length > maxLength) {
-        value = value.slice(0, maxLength);
+const NUMBERS_ONLY = /[^\d]/g;
+const LETTERS_ONLY = /[^a-zæøåA-ZÆØÅ\s]/g;
+const inputs = {
+    'username': {
+        element: document.getElementById('username'),
+        regex: /[^a-zæøåA-ZÆØÅ0-9]/g,
+        maxLength: 20
+    },
+    'name': {
+        element: document.getElementById('name'),
+        regex: LETTERS_ONLY,
+        maxLength: 50
+    },
+    'title': {
+        element: document.getElementById('title'),
+        regex: LETTERS_ONLY,
+        maxLength: 150
+    },
+    'hours': {
+        element: document.getElementById('durationHrs'),
+        regex: NUMBERS_ONLY,
+        maxLength: 3
+    },
+    'minutes': {
+        element: document.getElementById('durationMin'),
+        regex: NUMBERS_ONLY,
+        maxLength: 3
+    },
+    'price': {
+        element: document.getElementById('price'),
+        regex: NUMBERS_ONLY,
+        maxLength: 5
+    },
+    'participants': {
+        element: document.getElementById('participants'),
+        regex: NUMBERS_ONLY,
+        maxLength: 3
     }
-    
-    input.value = value;
+};
+
+function restrictInput(inputObj) {
+    let value = inputObj.element.value;
+    const newValue = value.replace(inputObj.regex, ''); // Remove disallowed characters
+    value = newValue.slice(0, inputObj.maxLength); // Limit to maximum length
+    inputObj.element.value = value;
 }
 
-if (USERNAME_LOGIN) {
-    USERNAME_LOGIN.addEventListener("input", function() {
-        restrictInput(USERNAME_LOGIN, USERNAME_REGEX, MAX_USERNAME_LENGTH);
-    });
+for (const inputName in inputs) {
+    const input = inputs[inputName];
+    if (input.element) {
+        input.element.addEventListener("input", function() {
+            restrictInput(input);
+        });
+    }
 }
 
-if (NAME_FORM) {
-    NAME_FORM.addEventListener("input", function() {
-        restrictInput(NAME_FORM, NAME_REGEX, MAX_NAME_LENGTH);
-    });
-}
