@@ -7,9 +7,17 @@ const FOCUS_FIELD = document.getElementById('title');
 let isCloseButtonFocused = false;
 
 function closeModal() {
+    const hasInputs = checkForInputs();
+    if (hasInputs) {
+        const shouldClose = confirm("Der er ikke-færdiggjorte ændringer, er du sikker på du vil lukke kursusoprettelsen?");
+        if (!shouldClose) {
+            return;
+        } else {
+            clearInputs();
+        }
+    }
     MODAL.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    SHOW_MODAL_BUTTON.focus();
 }
 function showModal() {
     MODAL.classList.remove('hidden');
@@ -49,5 +57,21 @@ if (MODAL) {
     });
     CLOSE_MODAL_BUTTON.addEventListener('blur', function() {
         isCloseButtonFocused = false;
+    });
+}
+
+function checkForInputs() {
+    const inputFields = document.querySelectorAll('#courseForm [required]');
+    for (let i = 0; i < inputFields.length; i++) {
+        if (inputFields[i].value.trim() !== '') {
+            return true;
+        }
+    }
+    return false;
+}
+function clearInputs() {
+    const inputFields = document.querySelectorAll('#courseForm [required]');
+    inputFields.forEach(function(input) {
+        input.value = '';
     });
 }
