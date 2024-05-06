@@ -17,9 +17,14 @@ const inputs = {
         maxLength: 150
     },
     'hours': {
-        element: document.getElementById('duration'),
+        element: document.getElementById('durationHrs'),
         regex: NUMBERS_ONLY,
-        maxLength: 2
+        maxLength: 3
+    },
+    'minutes': {
+        element: document.getElementById('durationMin'),
+        regex: NUMBERS_ONLY,
+        maxLength: 3
     },
     'price': {
         element: document.getElementById('price'),
@@ -35,12 +40,8 @@ const inputs = {
 
 function restrictInput(inputObj) {
     let value = inputObj.element.value;
-    const newValue = value.replace(inputObj.regex, '');
-    if (newValue.length > inputObj.maxLength) {
-        value = newValue.slice(0, inputObj.maxLength);
-    } else {
-        value = newValue;
-    }
+    const newValue = value.replace(inputObj.regex, ''); // Remove disallowed characters
+    value = newValue.slice(0, inputObj.maxLength); // Limit to maximum length
     inputObj.element.value = value;
 }
 
