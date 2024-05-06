@@ -197,6 +197,7 @@ h1 {
 .readMore {
     width: 300px;
     outline: 2px solid var(--CTA-color);
+    border: none;
     background-color: transparent;
     font-size: 18px;
     border-radius: 50px;
@@ -386,7 +387,7 @@ h1 {
 .modalForm > input {
     width: 100%;
 }
-.modalForm input {
+.modalForm input, .modalForm select {
     padding-inline-start: 2px;
 }
 .numberInput {
@@ -502,7 +503,6 @@ footer {
     }
     .readMore {
         width: 400px;
-        border: none;
         outline: 2px solid var(--CTA-color);
         background-color: transparent;
         font-size: 22px;
