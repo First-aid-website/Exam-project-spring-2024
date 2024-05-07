@@ -1,5 +1,6 @@
 const NUMBERS_ONLY = /[^\d]/g;
 const LETTERS_ONLY = /[^a-zæøåA-ZÆØÅ\s]/g;
+const TITLE_REGEX = /[^a-zæøåA-ZÆØÅ0-9\s[.,()]/g;
 const inputs = {
     'username': {
         element: document.getElementById('username'),
@@ -13,7 +14,7 @@ const inputs = {
     },
     'title': {
         element: document.getElementById('title'),
-        regex: LETTERS_ONLY,
+        regex: TITLE_REGEX,
         maxLength: 100
     },
     'startTimeHrs': {

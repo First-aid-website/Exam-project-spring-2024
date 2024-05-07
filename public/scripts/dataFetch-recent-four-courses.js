@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             const privateCoursesList = document.getElementById('privateCourses');
             privateCoursesList.innerHTML = ''; // Clear existing content
-            data.slice(0, 4).forEach(course => { // Slice to get the first 4 courses
+            data.slice(0, 5).forEach(course => { // Slice to get the first 4 courses
                 const listItem = document.createElement('li');
                 listItem.textContent = course.title; // Display only the course title
                 privateCoursesList.appendChild(listItem);
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             const erhvervCoursesList = document.getElementById('erhvervCourses');
             erhvervCoursesList.innerHTML = ''; // Clear existing content
-            data.slice(0, 4).forEach(course => { // Slice to get the first 4 courses
+            data.slice(0, 5).forEach(course => { // Slice to get the first 4 courses
                 const listItem = document.createElement('li');
                 listItem.textContent = course.title; // Display only the course title
                 erhvervCoursesList.appendChild(listItem);
