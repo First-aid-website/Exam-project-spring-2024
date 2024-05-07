@@ -197,6 +197,7 @@ h1 {
 .readMore {
     width: 300px;
     outline: 2px solid var(--CTA-color);
+    border: none;
     background-color: transparent;
     font-size: 18px;
     border-radius: 50px;
@@ -359,72 +360,6 @@ h1 {
 #passFeedbackList li::selection {
     background-color: lightgrey;
 }
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100dvw;
-    height: 100dvh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--darken-transparent);
-    padding-inline: 2em;
-    z-index: 100;
-}
-.modalForm {
-    position: relative;
-    min-width: min-content;
-    border-radius: 15px;
-    background-color: var(--bg-color-alt);
-    padding: 2em;
-}
-.modalForm > input, .modalForm > textarea, .modalForm > select, .gridWrapper {
-    font-size: 20px;
-    margin-block: 0 1em;
-}
-.modalForm > input {
-    width: 100%;
-}
-.numberInput {
-    font-size: 18px;
-    max-width: 80px;
-}
-.modalForm > textarea {
-    resize: none;
-}
-.gridWrapper {
-    width: 100%;
-    display: grid;
-    grid-template-columns: .9fr .2fr;
-    grid-template-rows: auto;
-    row-gap: .5em;
-    font-size: 18px;
-    align-items: center;
-}
-.gridWrapper > label {
-    width: max-content;
-}
-.closeModalButton {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 3px;
-    right:3px;
-    width: 35px;
-    height: 35px;
-    font-size: 30;
-    outline: 3px solid transparent;
-    border-top-right-radius: 10px;
-    transition: 250ms ease-in-out;
-    padding: .7em;
-}
-.closeModalButton:focus, .closeModalButton:hover {
-    cursor: pointer;
-    color: var(--delete-color);
-    outline: 3px solid var(--delete-color);
-}
 
 footer {
     display: flex;
@@ -495,7 +430,6 @@ footer {
     }
     .readMore {
         width: 400px;
-        border: none;
         outline: 2px solid var(--CTA-color);
         background-color: transparent;
         font-size: 22px;

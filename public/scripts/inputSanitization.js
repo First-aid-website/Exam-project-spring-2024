@@ -14,17 +14,27 @@ const inputs = {
     'title': {
         element: document.getElementById('title'),
         regex: LETTERS_ONLY,
-        maxLength: 150
+        maxLength: 100
     },
-    'hours': {
-        element: document.getElementById('durationHrs'),
+    'startTimeHrs': {
+        element: document.getElementById('startTimeHrs'),
         regex: NUMBERS_ONLY,
-        maxLength: 3
+        maxLength: 2
     },
-    'minutes': {
-        element: document.getElementById('durationMin'),
+    'startTimeMin': {
+        element: document.getElementById('startTimeMin'),
         regex: NUMBERS_ONLY,
-        maxLength: 3
+        maxLength: 2
+    },
+    'endTimeHrs': {
+        element: document.getElementById('endTimeHrs'),
+        regex: NUMBERS_ONLY,
+        maxLength: 2
+    },
+    'endTimeMin': {
+        element: document.getElementById('endTimeMin'),
+        regex: NUMBERS_ONLY,
+        maxLength: 2
     },
     'price': {
         element: document.getElementById('price'),
@@ -34,7 +44,7 @@ const inputs = {
     'participants': {
         element: document.getElementById('participants'),
         regex: NUMBERS_ONLY,
-        maxLength: 3
+        maxLength: 2
     }
 };
 
