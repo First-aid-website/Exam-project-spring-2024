@@ -36,9 +36,6 @@ if (MODAL) {
             closeModal();
         }
     });
-    SUBMIT.addEventListener('click', function() {
-        closeModal(true);
-    });
     CLOSE_MODAL_BUTTON.addEventListener('click', function() {
         closeModal();
     });

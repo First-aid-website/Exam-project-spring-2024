@@ -68,12 +68,12 @@
                     <div class="gridWrapper">
                         <label for="participants">Antal deltagere:</label>
                         <input type="number" id="participants" class="numberInput" name="participants" title="Antal kursusdeltagere (0-99)" placeholder="0" required>
-                        <label for="date">Dato:</label>
+                        <label for="dateDay">Dato:</label>
                         <div class="flexWrapper">
-                            <select id="dateDay" name="date">
+                            <select id="dateDay" name="dateDay">
                                 <!-- Bliver dynamisk udfyldt med antal dage for måneden -->
                             </select>
-                            <select id="dateMonth" name="date">
+                            <select id="dateMonth" name="dateMonth">
                                 <option value="0" disabled>Januar</option>
                                 <option value="1" disabled>Februar</option>
                                 <option value="2" disabled>Marts</option>
@@ -87,21 +87,21 @@
                                 <option value="10" disabled>November</option>
                                 <option value="11" disabled>December</option>
                             </select>
-                            <select id="dateYear" name="date">
+                            <select id="dateYear" name="dateYear">
                                 <!-- Bliver dynamisk udfyldt med de næste 5 år -->
                             </select>
                         </div>
-                        <label for="startTime">Start tidspunkt:</label>
+                        <label for="startTimeHrs">Start tidspunkt:</label>
                         <div class="flexWrapper">
-                            <input type="number" id="startTimeHrs" class="numberInput" name="startTime" title="Start-time (0-23)" placeholder="Time" required>
+                            <input type="number" id="startTimeHrs" class="numberInput" name="startTimeHrs" title="Start-time (0-23)" placeholder="Time" required>
                             <span>:</span>
-                            <input type="number" id="startTimeMin" class="numberInput" name="startTime" title="Start-minut (0-59)" placeholder="Minut" required>
+                            <input type="number" id="startTimeMin" class="numberInput" name="startTimeMin" title="Start-minut (0-59)" placeholder="Minut" required>
                         </div>
-                        <label for="endTime">Slut tidspunkt:</label>
+                        <label for="endTimeHrs">Slut tidspunkt:</label>
                         <div class="flexWrapper">
-                            <input type="number" id="endTimeHrs" class="numberInput" name="endTime" title="Slut-time (0-23)" placeholder="Time" required>
+                            <input type="number" id="endTimeHrs" class="numberInput" name="endTimeHrs" title="Slut-time (0-23)" placeholder="Time" required>
                             <span>:</span>
-                            <input type="number" id="endTimeMin" class="numberInput" name="endTime" title="Slut-minut (0-59)" placeholder="Minut" required>
+                            <input type="number" id="endTimeMin" class="numberInput" name="endTimeMin" title="Slut-minut (0-59)" placeholder="Minut" required>
                         </div>
                         <label for="price">Pris (kr.):</label>
                         <input type="number" id="price" class="numberInput" name="price" title="Pris for kursus" placeholder="0" required>
