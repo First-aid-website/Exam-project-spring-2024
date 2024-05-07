@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const { connectToDatabase, closeDatabaseConnection, insertUser, findUser } = require('./modules/database');
+const { insertUser, findUser, insertCourse } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
 const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
@@ -117,7 +117,6 @@ app.post('/signup', async (req, res) => {
 
         // await connectToDatabase();
         await insertUser(user);
-        await closeDatabaseConnection();
 
         res.status(201).json({ message: 'Brugeren oprettet' }); // Return a success message
     }
@@ -133,14 +132,17 @@ app.get('/courses', (req, res) => {
 });
   
 //Endpoint for indsættelse af kursus
-app.post('/courses', (req, res) => {
+app.post('/courses', async (req, res) => {
     try {
         console.log('Modtaget POST-anmodning til /courses');
         const courseData = req.body;
+        if (typeof courseData.teachings === 'string') {
+            // Adskil værdier efter mellemrum eller linjeskift
+            courseData.teachings = courseData.teachings.split(',');
+        }
         console.log('Kursusdata modtaget:', courseData);
-        // Eksempel: Indsæt kursusdata i din database (dette er fiktivt og skal tilpasses din database)
-        // Her kan du tilføje logikken til at indsætte kursusdata i din database
-        // Eksempel: Returner en succesbesked og det oprettede kursusdata
+        // Indsæt kursusdata i databasen
+        await insertCourse(courseData);
         res.status(201).json({ message: 'Kursus oprettet', course: courseData });
     } catch (error) {
         console.error('Fejl ved indsættelse af kursus:', error);

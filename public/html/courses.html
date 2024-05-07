@@ -20,8 +20,14 @@
         <label for="price">Pris (kr):</label><br>
         <input type="number" id="price" name="price" required><br>
 
-        <label for="content">Indhold:</label><br>
-        <textarea id="content" name="content" required></textarea><br>
+        <label for="type">Type:</label><br>
+        <select id="type" name="type" required>
+            <option value="private">Private</option>
+            <option value="erhverv">Erhverv</option>
+        </select><br>
+
+        <label for="teachings">Indhold:</label><br>
+        <textarea id="teachings" name="teachings" required></textarea><br>
 
         <button type="submit">Opret kursus</button>
     </form>
