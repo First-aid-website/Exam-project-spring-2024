@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const { connectToDatabase, closeDatabaseConnection, insertUser, findUser } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
@@ -20,16 +21,27 @@ app.use(cors({
 app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'))); //Til redirects
+app.use(
+    session({
+        secret: "my-secret",
+        cookie: {
+            secure: false,
+            httpOnly: false,
+            maxAge: 360000,
+            sameSite: 'strict'
+        }
+    }
+))
 const port = 3000;
 
-// function validateSessionMiddleware(req, res, next) {
-//     const sessionId = req.cookies.sessionId; // Antag at sessionId gemmes i en cookie
-//     console.log("SessionId fra anmodning:", sessionId);
-//     if (!sessionId || !validateAndUpdateSession(sessionId)) {
-//         return res.status(401).json({ error: 'Session udløbet eller er ugyldig.' });
-//     }
-//     next(); // Hvis sessionen er gyldig, fortsæt til næste middleware eller rutehåndtering
-// }
+function isAuthenticated(req, res, next){
+    if (req.session.user){
+        next();
+    }
+    else{
+        return res.status(200).json({ redirectUrl: '/public/html/login.html' });
+    }
+}
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -54,9 +66,8 @@ app.post('/login', async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDB);
         if (isPasswordValid) {
             // Password matcher
-            const sessionId = createSession(user._id); // Brug userId fra user objektet
+            req.session.user = { id: user._id, username: user.username };
             // Set the session cookie
-            setCookie(res, 'sessionId', sessionId, { path: '/', maxAge: 604800000 } ); // Set the session cookie
             // Redirect brugeren til index.html i public-mappen
             console.log(res.getHeaders()); // Log the response headers
             return res.status(200).json({ redirectUrl: '/public/index.html' });
