@@ -1,0 +1,120 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--darken-transparent);
+    padding-inline: 2em;
+    z-index: 100;
+}
+.modalForm {
+    position: relative;
+    max-width: 96dvw;
+    border-radius: 15px;
+    background-color: var(--bg-color-alt);
+    padding: .8em;
+}
+.modalForm > h2 {
+    font-size: 26px;
+    margin-block-end: .2em;
+}
+.modalForm input, .modalForm textarea, .modalForm select, .gridWrapper {
+    font-size: 15px;
+    margin-block-end: .5em;
+}
+.modalForm > input {
+    width: 100%;
+}
+.modalForm input, .modalForm select {
+    padding-inline-start: 2px;
+}
+.numberInput {
+    font-size: 18px;
+    max-width: 70px;
+}
+.modalForm > textarea {
+    resize: none;
+}
+#page2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#page2 label {
+    align-self: flex-start;
+    margin-block-end: 3px;
+}
+#page2 textarea {
+    resize:vertical;
+    margin-block-end: 1.5em;
+    max-width: 100%;
+}
+.gridWrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: .9fr .2fr;
+    grid-template-rows: auto;
+    row-gap: .5em;
+    column-gap: 10px;
+    font-size: 18px;
+    align-items: center;
+}
+.gridWrapper > label {
+    width: max-content;
+}
+.flexWrapper {
+    display: flex;
+    column-gap: 5px;
+}
+#titleAndType {
+    grid-template-columns: .9fr .3fr;
+}
+.closeModalButton {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 3px;
+    right:3px;
+    width: 35px;
+    height: 35px;
+    font-size: 30;
+    outline: 3px solid transparent;
+    border-top-right-radius: 10px;
+    transition: 250ms ease-in-out;
+    padding: .7em;
+}
+.closeModalButton:focus, .closeModalButton:hover {
+    cursor: pointer;
+    color: var(--delete-color);
+    outline: 3px solid var(--delete-color);
+}
+.navPages {
+    margin-block-start: 1em;
+    font-size: 20px;
+    text-align: center;
+}
+.paginationBtn {
+    padding: .2em .4em;
+    cursor: pointer;
+}
+.paginationBtn:hover, .paginationBtn:focus {
+    outline: 2px solid var(--CTA-color);
+}
+
+/* --------------------- iPad Version -----------------------*/ 
+@media screen and (width >= 725px) {
+    #page2 {
+        align-items: unset;
+    }
+    .modalForm input, .modalForm textarea, .modalForm select, .gridWrapper {
+        font-size: 18px;
+    }
+    #page2 button {
+        margin: 0 auto;
+    }
+}

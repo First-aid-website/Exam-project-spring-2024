@@ -4,24 +4,23 @@ const CLOSE_MODAL_BUTTON = document.getElementById('closeModal');
 const SHOW_MODAL_BUTTON = document.getElementById('showModalButton');
 const FORM_MODAL = document.getElementById('courseForm');
 const FOCUS_FIELD = document.getElementById('title');
+const SUBMIT = document.getElementById('submitCreation');
 let isCloseButtonFocused = false;
 
-function closeModal() {
+function closeModal(skipConfirmation) {
     const hasInputs = checkForInputs();
-    if (hasInputs) {
+    if (hasInputs && !skipConfirmation) {
         const shouldClose = confirm('Der er ikke-færdiggjorte ændringer, er du sikker på du vil lukke kursusoprettelsen?');
         if (!shouldClose) {
             return;
-        } else {
-            clearInputs();
         }
     }
+    clearInputs();
     MODAL.classList.add('hidden');
-    document.body.classList.remove('modal-open');
 }
+
 function showModal() {
     MODAL.classList.remove('hidden');
-    document.body.classList.add('modal-open');
     FOCUS_FIELD.focus();
 }
 function modalShown() {
@@ -36,6 +35,9 @@ if (MODAL) {
         if (!FORM_MODAL.contains(event.target)) {
             closeModal();
         }
+    });
+    SUBMIT.addEventListener('click', function() {
+        closeModal(true);
     });
     CLOSE_MODAL_BUTTON.addEventListener('click', function() {
         closeModal();
@@ -187,8 +189,7 @@ if (page1 && page2 && prevBtn && nextBtn) {
         }
     });
 
+    showPage1();
     prevBtn.addEventListener('click', showPage1);
     nextBtn.addEventListener('click', showPage2);
-
-    showPage1();
 }

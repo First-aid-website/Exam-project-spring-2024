@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
     <link rel="stylesheet" href="/public/styles/styles.css">
     <link rel="stylesheet" href="/public/styles/animation.css">
+    <link rel="stylesheet" href="/public/styles/modal.css">
     <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
     <script src="/public/scripts/index.js" defer></script>
     <script src="/public/scripts/inputSanitization.js" defer></script>
@@ -55,13 +56,15 @@
                 <h2>Opret kursus</h2>
                 <i id="closeModal" class="fas fa-x closeModalButton" tabindex="0" title="Luk kursusoprettelse (Esc)"></i>
                 <div id="page1">
-                    <label for="title">Titel:</label><br>
-                    <input type="text" id="title" name="title" title="Navnet på det nye kursus" placeholder="Kursus titel" required><br>
-                    <label for="type">Type:</label><br>
-                    <select id="type" name="type">
-                        <option value="private">Private</option>
-                        <option value="erhverv">Erhverv</option>
-                    </select>
+                    <div id="titleAndType" class="gridWrapper">
+                        <label for="title">Titel:</label>
+                        <label for="type">Type:</label>
+                        <input type="text" id="title" name="title" title="Navnet på det nye kursus" placeholder="Kursus titel" required>
+                        <select id="type" name="type">
+                            <option value="private">Private</option>
+                            <option value="erhverv">Erhverv</option>
+                        </select>
+                    </div>
                     <div class="gridWrapper">
                         <label for="participants">Antal deltagere:</label>
                         <input type="number" id="participants" class="numberInput" name="participants" title="Antal kursusdeltagere (0-99)" placeholder="0" required>
@@ -100,21 +103,21 @@
                             <span>:</span>
                             <input type="number" id="endTimeMin" class="numberInput" name="endTime" title="Slut-minut (0-59)" placeholder="Minut" required>
                         </div>
-                        <label for="price">Pris (kr):</label>
+                        <label for="price">Pris (kr.):</label>
                         <input type="number" id="price" class="numberInput" name="price" title="Pris for kursus" placeholder="0" required>
                     </div>
                 </div>
                 <div id="page2" class="hidden">
                     <label for="description">Beskrivelse af kursus:</label><br>
-                    <textarea id="description" name="description" required></textarea><br>
+                    <textarea id="description" name="description" rows="4" cols="40" placeholder="I dette kursus..." title="Kort beskrivelse af kurset, samt yderligere praktisk information" required></textarea><br>
                     <label for="content">Stikordsformat af kursus indhold (komma-separeret):</label><br>
-                    <textarea id="content" name="content" placeholder="Aflåst sideleje, Hjernerystelse, osv..." title="Kort beskrivelse af kursets læringsindhold (separeret med komma)" required></textarea><br>
-                    <button type="submit" class="readMore">Opret kursus</button>
+                    <textarea id="content" name="content" rows="3" cols="40" placeholder="Aflåst sideleje, Hjernerystelse, osv..." title="Kursets læringspunkter som stikord (separeret med komma)" required></textarea><br>
+                    <button type="submit" id="submitCreation" class="readMore">Opret kursus</button>
                 </div>
-                <nav>
+                <nav class="navPages">
+                    <i id="prevBtn" class="fas fa-chevron-left paginationBtn hidden" tabindex="0" title="Gå til forrige side"></i>
                     <span id="pagination">(1/2)</span>
-                    <i id="prevBtn" class="fas fa-chevron-left hidden" tabindex="0" title="Gå til forrige side"></i>
-                    <i id="nextBtn" class="fas fa-chevron-right" tabindex="0" title="Gå til næste side"></i>
+                    <i id="nextBtn" class="fas fa-chevron-right paginationBtn" tabindex="0" title="Gå til næste side"></i>
                 </nav>
             </form>
         </aside>

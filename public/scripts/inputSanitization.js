@@ -14,7 +14,7 @@ const inputs = {
     'title': {
         element: document.getElementById('title'),
         regex: LETTERS_ONLY,
-        maxLength: 150
+        maxLength: 100
     },
     'startTimeHrs': {
         element: document.getElementById('startTimeHrs'),
