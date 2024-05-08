@@ -6,15 +6,13 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
+const validator = require('validator');
 const { insertUser, findUser, insertCourse } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
-const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
-const { createSession, getSession, deleteSession, validateAndUpdateSession } = require('./modules/session');
+//const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
 const { fetchCourses, fetchCoursesByType } = require('./modules/database');
-const nodemailer = require('nodemailer');
-const validator = require('validator');
-//const { setCookie, getCookie } = require('./modules/cookies');
 
 //Opret en Express-app
 const app = express();
@@ -127,7 +125,7 @@ app.post('/login', async (req, res) => {
             // Set the session cookie
             //req.session.save();
             res.cookie('sessionId', req.session.user, { maxAge: 604800000, httpOnly: true }); // Set the session cookie
-            return res.status(200).json({ redirectUrl: '/login' });
+            return res.status(200).json({ redirectUrl: '/' });
         } else {
             // Password matcher ikke
             return res.status(401).json({ error: 'Brugernavn eller password er forkert.' });
@@ -139,16 +137,16 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/logout', (req, res) => {
-    const { sessionId } = req.body;
-    try {
-        deleteSession(sessionId); // Slet sessionen
-        return res.status(200).json({ message: 'Logout successful!' });
-    } catch(error) {
-        console.error('Error during logout:', error);
-        res.status(500).json({ error: 'An error occurred during logout.' });
-    }
-});
+// app.post('/logout', (req, res) => {
+//     const { sessionId } = req.body;
+//     try {
+//         deleteSession(sessionId); // Slet sessionen
+//         return res.status(200).json({ message: 'Logout successful!' });
+//     } catch(error) {
+//         console.error('Error during logout:', error);
+//         res.status(500).json({ error: 'An error occurred during logout.' });
+//     }
+// });
   
 app.post('/signup', async (req, res) => {
     const { username, password, confirmPassword } = req.body;
