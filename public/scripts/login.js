@@ -11,17 +11,14 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password }),
+            credentials: "include" // Inkluderer cookies i anmodningen
         });
 
         const data = await response.json();
         console.log('Login response:', data); // Tilføj denne linje for at kontrollere svaret fra serveren
         
         if (response.ok) {
-            // Hent session-ID fra cookien
-            const sessionId = getCookieValue("sessionId");
-            console.log("Session ID fra cookien:", sessionId);
-
             // Omdiriger til den angivne URL
             window.location.href = data.redirectUrl;
         } else {

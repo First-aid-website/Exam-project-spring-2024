@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const { insertUser, findUser, insertCourse } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
@@ -15,21 +16,78 @@ const { fetchCourses, fetchCoursesByType } = require('./modules/database');
 //Opret en Express-app
 const app = express();
 app.use(cors({
-    credentials: true
+    credentials: true,
+    origin: true
 }));
 app.use(express.json()); // Parse JSON bodies
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public'))); //Til redirects
+app.use(express.static(path.join(__dirname, '../public'))); //Til redirects
+app.use(
+    session({
+        secret: "my-secret",
+        cookie: {
+            secure: false,
+            httpOnly: false,
+            maxAge: 604800000,
+            sameSite: 'strict'
+        }
+    }
+))
 const port = 3000;
 
-// function validateSessionMiddleware(req, res, next) {
-//     const sessionId = req.cookies.sessionId; // Antag at sessionId gemmes i en cookie
-//     console.log("SessionId fra anmodning:", sessionId);
-//     if (!sessionId || !validateAndUpdateSession(sessionId)) {
-//         return res.status(401).json({ error: 'Session udløbet eller er ugyldig.' });
-//     }
-//     next(); // Hvis sessionen er gyldig, fortsæt til næste middleware eller rutehåndtering
-// }
+function isAuthenticated(req, res, next){
+    if (req.session.user){
+        next();
+    }
+    else{
+        return res.status(200).json({ redirectUrl: '/login' });
+    }
+}
+
+app.get('/login', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/html/login.html');
+    res.sendFile(filePath);
+});
+
+app.get('/signup', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/html/signup.html');
+    res.sendFile(filePath);
+});
+
+app.get('/business', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/html/business.html');
+    res.sendFile(filePath);
+});
+
+app.get('/contact', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/html/contact.html');
+    res.sendFile(filePath);
+});
+
+app.get('/courses', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/html/courses.html');
+    res.sendFile(filePath);
+});
+
+app.get('/panel', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/html/panel.html');
+    res.sendFile(filePath);
+});
+
+app.get('/private', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/html/private.html');
+    res.sendFile(filePath);
+});
+
+app.get('/about', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/html/about.html');
+    res.sendFile(filePath);
+});
+
+app.get('/', (req, res) => {
+    const filePath = path.resolve(__dirname, '../public/index.html');
+    res.sendFile(filePath);
+});
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -52,14 +110,15 @@ app.post('/login', async (req, res) => {
         const hashedPasswordFromDB = user.password; // Det hashede password fra databasen
         // Sammenlign det hashede password fra databasen med det, der blev sendt i login-forespørgslen
         const isPasswordValid = await bcrypt.compare(password, hashedPasswordFromDB);
+        console.log(isPasswordValid);
         if (isPasswordValid) {
             // Password matcher
-            const sessionId = createSession(user._id); // Brug userId fra user objektet
+            req.session.user = { id: user._id, username: user.username };
+            console.log(req.session.user);
             // Set the session cookie
-            //setCookie(res, 'sessionId', sessionId, { path: '/', maxAge: 604800000 } ); // Set the session cookie
-            // Redirect brugeren til index.html i public-mappen
-            console.log(res.getHeaders()); // Log the response headers
-            return res.status(200).json({ redirectUrl: '/public/index.html' });
+            //req.session.save();
+            res.cookie('sessionId', req.session.user, { maxAge: 604800000, httpOnly: true }); // Set the session cookie
+            return res.status(200).json({ redirectUrl: '/login' });
         } else {
             // Password matcher ikke
             return res.status(401).json({ error: 'Brugernavn eller password er forkert.' });
@@ -121,7 +180,7 @@ app.get('/courses', (req, res) => {
 });
   
 //Endpoint for indsættelse af kursus
-app.post('/courses', async (req, res) => {
+app.post('/courses', isAuthenticated, async (req, res) => {
     try {
         console.log('Modtaget POST-anmodning til /courses');
         const courseData = req.body;
@@ -132,7 +191,7 @@ app.post('/courses', async (req, res) => {
         console.log('Kursusdata modtaget:', courseData);
         // Indsæt kursusdata i databasen
         await insertCourse(courseData);
-        res.status(201).json({ message: 'Kursus oprettet', course: courseData });
+        res.status(201).json({ message: 'Kursus oprettet', course: courseData, redirectUrl: '/panel' });
     } catch (error) {
         console.error('Fejl ved indsættelse af kursus:', error);
         res.status(500).json({ error: 'Der opstod en fejl under indsættelse af kursus.' });
