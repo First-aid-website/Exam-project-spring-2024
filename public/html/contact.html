@@ -55,11 +55,11 @@
                         <li><a href="tel:"><i class="fas fa-phone"></i> Mobil: +45 [digits]</a></li>
                     </ul>
                 </aside>
-                <form action="">
+                <form action="/send-message" method="POST">
                     <p>Udfyld formen nedenfor, og vi kontakter dig så hurtigt som muligt</p>
-                    <input type="text" id="name" placeholder="Dit fulde navn" title="Skriv dit fulde navn" required>
-                    <input type="email" id="mail" placeholder="Din email" title="Skriv din email" required>
-                    <textarea rows="8" id="message" placeholder="Besked" title="Skriv din besked" required></textarea>
+                    <input type="text" id="name" name="name" placeholder="Dit fulde navn" title="Skriv dit fulde navn" required>
+                    <input type="email" id="mail" name="mail" placeholder="Din email" title="Skriv din email" required>
+                    <textarea rows="8" id="message" name="message" placeholder="Besked" title="Skriv din besked" required></textarea>
                     <input type="submit" class="readMore" value="Send besked">
                 </form>
             </div>

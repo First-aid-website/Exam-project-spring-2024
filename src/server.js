@@ -1,6 +1,7 @@
 //Importér Express-modulet
 const express = require('express');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -11,6 +12,8 @@ const { validatePassword } = require('./modules/password-validator');
 const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
 const { createSession, getSession, deleteSession, validateAndUpdateSession } = require('./modules/session');
 const { fetchCourses, fetchCoursesByType } = require('./modules/database');
+const nodemailer = require('nodemailer');
+const validator = require('validator');
 //const { setCookie, getCookie } = require('./modules/cookies');
 
 //Opret en Express-app
@@ -20,11 +23,12 @@ app.use(cors({
     origin: true
 }));
 app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public'))); //Til redirects
 app.use(
     session({
-        secret: "my-secret",
+        secret: generateRandomString(),
         cookie: {
             secure: false,
             httpOnly: false,
@@ -43,6 +47,11 @@ function isAuthenticated(req, res, next){
         return res.status(200).json({ redirectUrl: '/login' });
     }
 }
+
+// Function to generate a random string
+function generateRandomString() {
+    return crypto.randomBytes(20).toString('hex');
+  }
 
 app.get('/login', (req, res) => {
     const filePath = path.resolve(__dirname, '../public/html/login.html');
@@ -219,6 +228,51 @@ app.get('/courses/erhverv', async (req, res) => {
     } catch (error) {
         console.error('Fejl ved hentning af kurser til erhverv:', error);
         res.status(500).json({ error: 'En fejl opstod under hentning af kurser for private.' });
+    }
+});
+const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'noemy.turner76@ethereal.email',
+      pass: 'zWQUwMdH2B2UAXUPV8'
+    }
+});
+app.post('/send-message', async (req, res) => {
+    const { name, mail, message } = req.body;
+
+    // Check if mail is undefined or not a string
+    if (typeof mail !== 'string' || !mail.trim()) {
+        return res.status(400).json({ error: 'Kunne ikke sende din besked: Den angivne email-addresse er ugyldig' });
+    }
+
+    // Validate email address
+    if (!validator.isEmail(mail)) {
+        return res.status(400).json({ error: 'Kunne ikke sende din besked: Den angivne email-addresse er ugyldig' });
+    }
+
+    try {
+        // Send email to the company
+        await transporter.sendMail({
+            from: mail,
+            to: 'perfectlyalignedroof@gmail.com',
+            subject: 'Ny besked fra kontaktformular på BeredtBorgere.dk',
+            text: `Name: ${name}\nEmail: ${mail}\nMessage: ${message}`
+        });
+
+        // Send confirmation email to the user
+        await transporter.sendMail({
+            from: 'BeredtBorgere.dk',
+            to: mail,
+            subject: 'Bekræftelse: Din besked er blevet sendt',
+            text: 'Tak fordi du har kontaktet os hos BeredtBorgere.dk, din besked er blevet modtaget, og du får svar på denne mailaddresse hurtigst muligt.'
+        });
+
+        res.status(200).json({ message: 'Message sent successfully' });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ error: 'An error occurred while sending the message' });
     }
 });
 
