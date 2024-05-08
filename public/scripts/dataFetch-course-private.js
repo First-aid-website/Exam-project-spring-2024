@@ -7,11 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
             data.forEach(course => {
                 const listItem = document.createElement('li');
                 listItem.classList.add('courseWrapper');
+                const startTimeHrs = parseInt(course.startTimeHrs);
+                const startTimeMin = parseInt(course.startTimeMin);
+                const endTimeHrs = parseInt(course.endTimeHrs);
+                const endTimeMin = parseInt(course.endTimeMin);
+                const monthName = getMonthName(parseInt(course.dateMonth));
+                const duration = calcDuration(startTimeHrs, startTimeMin, endTimeHrs, endTimeMin);
                 listItem.innerHTML = `
                     <div class="courseDetails">
                         <h2 class="courseTitle">${course.title}</h2>
-                        <p class="courseParticipants">${course.participants}</p>
-                        <h3 class="courseDuration">${course.dateDay}${course.dateMonth}${course.dateYear} kl. ${course.startTimeHrs}:${course.startTimeMin}-${course.endTimeHrs}:${course.endTimeMin}</h3>
+                        <p class="courseParticipants"><i class="fas fa-users"></i> Op til ${course.participants} deltagere</p>
+                        <h3 class="courseDuration"><i class="far fa-calendar"></i> ${course.dateDay}. ${monthName} (${course.dateYear})<br><i class="far fa-clock"></i> ${duration}</h3>
                         <h3 class="coursePrice">${course.price},-</h3>
                         <a href="#" class="bookBtn readMore">Bestil Plads</a>
                     </div>
@@ -25,3 +31,4 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Fejl ved hentning af kurser til private:', error));
     });
     
+    // kl. ${course.startTimeHrs}:${course.startTimeMin}-${course.endTimeHrs}:${course.endTimeMin} 
