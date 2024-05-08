@@ -8,21 +8,18 @@ document.getElementById('courseForm').addEventListener('submit', async function(
     });
 
     try {
-        const cookieValue = getCookie('sessionId'); // Få session cookie-værdien ved at kalde den lokale getCookie-funktion
-        console.log("SessionId sendt med anmodning:", cookieValue);
-        
         const response = await fetch('http://localhost:3000/courses', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'sessionId': cookieValue // Tilføj session cookien til anmodningens header
             },
             body: JSON.stringify(courseData), // Brug formData direkte som body
-            withCredentials: true // Tilføj denne linje
+            credentials: "include" // Inkluderer cookies i anmodningen
         });
         const data = await response.json();
-        console.log(data); // Udskriv det modtagne svar i konsollen
-        alert('Kursus oprettet!');
+        if(response.ok){
+            window.location.href = data.redirectUrl;
+        }
     } catch (error) {
         console.error('Fejl ved sendning af anmodning:', error);
         alert('Der opstod en fejl ved sendning af anmodning til /courses-endepunktet.');

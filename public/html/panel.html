@@ -16,33 +16,33 @@
     <meta property="og:image" content= "/public/media/beredtLogo_Dark">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
-    <link rel="stylesheet" href="/public/styles/styles.css">
-    <link rel="stylesheet" href="/public/styles/animation.css">
-    <link rel="stylesheet" href="/public/styles/modal.css">
-    <link rel="icon" href="/public/media/favIcon_Light.webp" type="image/webp">
-    <script src="/public/scripts/modal.js" defer></script>
-    <script src="/public/scripts/inputSanitization.js" defer></script>
-    <script src="/public/scripts/mobileMenu.js" defer></script>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/animation.css">
+    <link rel="stylesheet" href="/styles/modal.css">
+    <link rel="icon" href="/media/favIcon_Light.webp" type="image/webp">
+    <script src="/scripts/index.js" defer></script>
+    <script src="/scripts/inputSanitization.js" defer></script>
+    <script src="/scripts/mobileMenu.js" defer></script>
 </head>
 <body>
     <header>
-        <a href="/public/index.html" class="responsiveLogo">
+        <a href="/" class="responsiveLogo">
             <picture>
             <source
-            srcset="/public/media/beredtLogo_Dark.webp"
+            srcset="/media/beredtLogo_Dark.webp"
             width="167"
             height="78"
             media="(min-width: 725px)">
-            <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" title="Til forsiden for Beredt Borgere.dk" width="91" height="44">
+            <img src="/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" title="Til forsiden for Beredt Borgere.dk" width="91" height="44">
             </picture>
         </a>
         <i class="fas fa-bars" id="mobileMenuBtn"></i>
         <nav id="mainMenu" class="mainNavigation hidden">
             <ul class="navigationList">
-                <li><a href="/public/html/business.html">Erhverv</a></li>
-                <li><a href="/public/html/private.html">Privat</a></li>
-                <li><a href="/public/html/contact.html">Kontakt</a></li>
-                <li><a href="/public/html/about.html">Om os</a></li>
+                <li><a href="/business">Erhverv</a></li>
+                <li><a href="/private">Privat</a></li>
+                <li><a href="/contact">Kontakt</a></li>
+                <li><a href="/about">Om os</a></li>
             </ul>
         </nav> 
     </header>
@@ -124,8 +124,8 @@
     </main>
     <footer>
         <div class="footerSection">
-            <img src="/public/media/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" class="companyLogo" width="100" height="50">
-            <a href="/public/html/signup.html" id="signUp" class="logInBtn"><i class="fas fa-user-plus"></i> Opret Bruger</a>
+            <img src="/beredtLogo_Dark.webp" alt="Logo for Beredt Borger" class="companyLogo" width="100" height="50">
+            <a href="/signup" id="signUp" class="logInBtn"><i class="fas fa-user-plus"></i> Opret Bruger</a>
         </div>
         <ul class="footerSection" id="kontakt">
             <li><i class="fas fa-map-marker-alt"></i> [Adresse]</li>
@@ -135,6 +135,6 @@
             <li>CVR: [CVR]</li>
         </ul>
     </footer>
-    <script src="/public/scripts/courses.js"></script>
+    <script src="/scripts/courses.js"></script>
 </body>
 </html>
