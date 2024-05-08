@@ -229,12 +229,12 @@ app.get('/courses/erhverv', async (req, res) => {
     }
 });
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
+    host: 'smtp.office365.com',
     port: 587,
     secure: false,
     auth: {
-      user: 'noemy.turner76@ethereal.email',
-      pass: 'zWQUwMdH2B2UAXUPV8'
+      user: 'kontakt-beredtborger@outlook.com',
+      pass: 'AJG3pctxsqhj7BE'
     }
 });
 app.post('/send-message', async (req, res) => {
