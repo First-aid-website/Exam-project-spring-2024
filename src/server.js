@@ -228,15 +228,23 @@ app.get('/courses/erhverv', async (req, res) => {
         res.status(500).json({ error: 'En fejl opstod under hentning af kurser for private.' });
     }
 });
-const transporter = nodemailer.createTransport({
+
+let transporter = nodemailer.createTransport({
     host: 'smtp.office365.com',
-    port: 587,
+    port: '587',
     secure: false,
+    tls: {
+        ciphers: "SSLv3",
+        rejectUnauthorized: false,
+    },
     auth: {
-      user: 'kontakt-beredtborger@outlook.com',
-      pass: 'AJG3pctxsqhj7BE'
-    }
+        user: 'kontakt-beredtborgere@outlook.com',
+        pass: 'AJG3pctxsqhj7BE'
+    },
+    debug: true,
+    logger:true,
 });
+
 app.post('/send-message', async (req, res) => {
     const { name, mail, message } = req.body;
 
@@ -253,16 +261,17 @@ app.post('/send-message', async (req, res) => {
     try {
         // Send email to the company
         await transporter.sendMail({
-            from: mail,
-            to: 'perfectlyalignedroof@gmail.com',
+            from: 'kontakt-beredtborgere@outlook.com',
+            to: 'walocial@hotmail.com', // Replace with the company email address
             subject: 'Ny besked fra kontaktformular på BeredtBorgere.dk',
-            text: `Name: ${name}\nEmail: ${mail}\nMessage: ${message}`
+            text: `Name: ${name}\nEmail: ${mail}\nMessage: ${message}`,
+            replyTo: mail // Set the replyTo field to the user's email address
         });
-
+    
         // Send confirmation email to the user
         await transporter.sendMail({
-            from: 'BeredtBorgere.dk',
-            to: mail,
+            from: 'kontakt-beredtborgere@outlook.com',
+            to: mail, // Send confirmation email to the user
             subject: 'Bekræftelse: Din besked er blevet sendt',
             text: 'Tak fordi du har kontaktet os hos BeredtBorgere.dk, din besked er blevet modtaget, og du får svar på denne mailaddresse hurtigst muligt.'
         });
