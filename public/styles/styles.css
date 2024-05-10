@@ -181,6 +181,9 @@ h1 {
     filter:brightness(0.5);
     margin-block: var(--header-height-mobile) 0;
 }
+.sectionSubHeading {
+    text-align: center;
+}
 .ctaBtn {
     background-color: var(--CTA-color);
     font-size: 24px;
