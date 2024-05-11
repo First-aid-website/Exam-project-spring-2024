@@ -2,15 +2,18 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const nodemailer = require('nodemailer');
 const validator = require('validator');
+const rateLimit = require('express-rate-limit');
 const { insertUser, findUser, insertCourse } = require('./modules/database');
 const { hashPassword } = require('./modules/password-hasher');
 const { validatePassword } = require('./modules/password-validator');
+const { sanitizeInput  } = require('./modules/sanitization.js');
 //const { generateMFACode, verifyMFACode  } = require('./modules/mfa');
 const { fetchCourses, fetchCoursesByType } = require('./modules/database');
 
@@ -35,6 +38,26 @@ app.use(
         }
     }
 ))
+app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'"],
+          styleSrc: ["'self'", "https://use.fontawesome.com"],
+          imgSrc: ["'self'"],
+          fontSrc: ["'self'", "https://use.fontawesome.com"],
+          objectSrc: ["'none'"],
+          upgradeInsecureRequests: [],
+        },
+      },
+      hidePoweredBy: {},
+      crossOriginResourcePolicy: true,
+      referrerPolicy: { policy: 'same-origin' },
+      noSniff: {},
+    })
+  );
+  
 const port = 3000;
 
 function isAuthenticated(req, res, next){
@@ -96,8 +119,26 @@ app.get('/', (req, res) => {
     res.sendFile(filePath);
 });
 
-app.post('/login', async (req, res) => {
+const limiter_login = rateLimit({
+    windowMs: 5 * 60 * 1000, // 5 minutter
+    max: 3, // 3 forsøg
+    message: 'For mange ugyldige login forsøg, prøv igen om 5 minutter'
+});
+
+app.post('/login', limiter_login, async (req, res) => {
     const { username, password } = req.body;
+
+    // Tjekker om inputfeltet er tomt
+    if (!username) {
+        return res.status(400).json({ error: 'Der skal skrives et brugernavn' });
+    }
+    // Server-side sanitization, matcher mod den samme regex som på clientside
+    const validUsernameRegex = /[^a-zæøåA-ZÆØÅ0-9\s[.,()]/g;
+    if (!validUsernameRegex.test(username)) {
+        return res.status(400).json({ error: 'Invalid username format' });
+    }
+    // Vi tjekker inputfeltets validitet inden vi foretager database kald
+
     try{
         const user = await findUser(username);
         console.log('User:', user);
@@ -154,6 +195,7 @@ app.post('/signup', async (req, res) => {
         const passwordValidation = validatePassword(password);
         const passwordHash = hashPassword(password);
         const usernameRegex = /^[a-zæøåA-ZÆØÅ0-9]{4,20}$/;
+        const existingUser = await findUser(username);
 
         if (!usernameRegex.test(username)) {
             return res.status(400).json({ error: 'Brugernavnet er ugyldigt' });
@@ -163,6 +205,9 @@ app.post('/signup', async (req, res) => {
         }
         if (confirmPassword !== password){
             return res.status(400).json({ error: 'Kodeordene matcher ikke'});
+        }
+        if (existingUser) {
+            return res.status(400).json({ error: 'Brugernavnet er allerede i brug' });
         }
         
         const user = {
@@ -191,10 +236,18 @@ app.post('/courses', isAuthenticated, async (req, res) => {
     try {
         console.log('Modtaget POST-anmodning til /courses');
         const courseData = req.body;
-        if (typeof courseData.teachings === 'string') {
-            // Adskil værdier efter mellemrum eller linjeskift
-            courseData.teachings = courseData.teachings.split(',');
+
+        // Check if any required fields are empty
+        const requiredFields = ['title', 'type', 'participants', 'dateDay', 'dateMonth', 'dateYear', 'startTimeHrs', 'startTimeMin', 'endTimeHrs', 'endTimeMin', 'price', 'description', 'content'];
+        for (const field of requiredFields) {
+            if (!courseData[field]) {
+                return res.status(400).json({ error: `${field} skal udfyldes` });
+            }
         }
+
+        // Sanitize input data
+        courseData = sanitizeInput(courseData);
+
         console.log('Kursusdata modtaget:', courseData);
         // Indsæt kursusdata i databasen
         await insertCourse(courseData);
@@ -229,6 +282,12 @@ app.get('/courses/erhverv', async (req, res) => {
     }
 });
 
+const limiter_messages = rateLimit({
+    windowMs: 5 * 60 * 1000, // 5 minutter
+    max: 1, // 1 request hvert 5. minut
+    message: 'Du kan kun sende nye beskeder én gang hvert femte minut'
+});
+
 let transporter = nodemailer.createTransport({
     host: 'smtp.office365.com',
     port: '587',
@@ -245,8 +304,19 @@ let transporter = nodemailer.createTransport({
     logger:true,
 });
 
-app.post('/send-message', async (req, res) => {
+app.post('/send-message', limiter_messages, async (req, res) => {
     const { name, mail, message } = req.body;
+
+    // Check if any field is empty
+    if (!name || !mail || !message) {
+        return res.status(400).json({ error: 'Alle felter skal udfyldes' });
+    }
+
+    // Server-side sanitization, matcher mod den samme regex som på clientside
+    const nameRegex = /[^a-zæøåA-ZÆØÅ\s]/g;
+    if (!nameRegex.test(name)) {
+        return res.status(400).json({ error: 'Ugyldige tegn fundet i navn' });
+    }
 
     // Check if mail is undefined or not a string
     if (typeof mail !== 'string' || !mail.trim()) {
