@@ -284,8 +284,8 @@ app.get('/courses/erhverv', async (req, res) => {
 
 const limiter_messages = rateLimit({
     windowMs: 5 * 60 * 1000, // 5 minutter
-    max: 1, // 1 request hvert 5. minut
-    message: 'Du kan kun sende nye beskeder én gang hvert femte minut'
+    max: 2, // 2 requests hvert 5. minut
+    message: 'Du kan kun sende to nye beskeder hvert femte minut'
 });
 
 let transporter = nodemailer.createTransport({
@@ -314,7 +314,7 @@ app.post('/send-message', limiter_messages, async (req, res) => {
 
     // Server-side sanitization, matcher mod den samme regex som på clientside
     const nameRegex = /[^a-zæøåA-ZÆØÅ\s]/g;
-    if (!nameRegex.test(name)) {
+    if (nameRegex.test(name)) {
         return res.status(400).json({ error: 'Ugyldige tegn fundet i navn' });
     }
 
