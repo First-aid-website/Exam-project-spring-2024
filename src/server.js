@@ -352,9 +352,62 @@ app.post('/send-message', limiter_messages, async (req, res) => {
         res.status(500).json({ error: 'An error occurred while sending the message' });
     }
 });
-app.post('/join-course', async (req, res) => {
-    const { name, mail, message } = req.body;
+const limiter_joinCourse = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minut
+    max: 1, // 1 requests hvert minut
+    message: 'Du kan kun tilmelde dig ét kursus i minuttet'
 });
+
+app.post('/join-course', limiter_joinCourse, async (req, res) => {
+    const { courseTitle, name, mail, amount } = req.body;
+    // Check if any field is empty
+    if (!name || !mail || !amount) {
+        return res.status(400).json({ error: 'Alle felter skal udfyldes' });
+    }
+    if (amount > 16) {
+        return res.status(400).json({ error: 'Du kan ikke bestille mere end 16 pladser'});
+    }
+    // Server-side sanitization for name
+    const nameRegex = /[^a-zæøåA-ZÆØÅ\s]/g;
+    if (nameRegex.test(name)) {
+        return res.status(400).json({ error: 'Ugyldige tegn fundet i navn' });
+    }
+
+    // Check if mail is undefined or not a string
+    if (typeof mail !== 'string' || !mail.trim()) {
+        return res.status(400).json({ error: 'Kunne ikke sende din besked: Den angivne email-addresse er ugyldig' });
+    }
+
+    // Validate email address
+    if (!validator.isEmail(mail)) {
+        return res.status(400).json({ error: 'Kunne ikke sende din besked: Den angivne email-addresse er ugyldig' });
+    }
+
+    try {
+        // Send email to the company
+        await transporter.sendMail({
+            from: 'kontakt-beredtborgere@outlook.com',
+            to: 'walocial@hotmail.com', // Replace with the company email address
+            subject: 'Ny tilmelding til kursus: ' + courseTitle,
+            text: `Kursus: ${courseTitle}\nNavn: ${name}\nEmail: ${mail}\nAntal pladser: ${amount}`,
+            replyTo: mail // Set the replyTo field to the user's email address
+        });
+    
+        // Send confirmation email to the user
+        await transporter.sendMail({
+            from: 'kontakt-beredtborgere@outlook.com',
+            to: mail, // Send confirmation email to the user
+            subject: 'Bekræftelse: Du er nu tilmeldt kursus: ' + courseTitle,
+            text: `Tak fordi du har tilmeldt dig kurset: ${courseTitle}. Vi har modtaget din tilmelding, og du får svar på denne mailadresse hurtigst muligt.`
+        });
+
+        res.status(200).json({ message: 'Tilmelding modtaget' });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ error: 'An error occurred while sending the message' });
+    }
+});
+
 
 //Start serveren
 app.listen(port, () => {

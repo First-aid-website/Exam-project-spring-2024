@@ -3,14 +3,16 @@ const MODAL = document.getElementById('modal');
 const CLOSE_MODAL_BUTTON = document.getElementById('closeModal');
 const SHOW_MODAL_BUTTON = document.getElementById('showModalButton');
 const FORM_MODAL = document.getElementById('courseForm');
-const FOCUS_FIELD = document.getElementById('title');
 const SUBMIT = document.getElementById('submitCreation');
+const COURSE_TITLE_ELEMENT = document.getElementById('courseTitle');
+const COURSE_TITLE_INPUT = document.getElementById('courseTitleInput');
+let focus_field = document.getElementById('title');
 let isCloseButtonFocused = false;
 
 function closeModal(skipConfirmation) {
     const hasInputs = checkForInputs();
     if (hasInputs && !skipConfirmation) {
-        const shouldClose = confirm('Der er ikke-færdiggjorte ændringer, er du sikker på du vil lukke kursusoprettelsen?');
+        const shouldClose = confirm('Der er ikke-færdiggjorte ændringer, er du sikker på du vil lukke dette vindue?');
         if (!shouldClose) {
             return;
         }
@@ -19,9 +21,16 @@ function closeModal(skipConfirmation) {
     MODAL.classList.add('hidden');
 }
 
-function showModal() {
+function showModal(courseTitle) {
     MODAL.classList.remove('hidden');
-    FOCUS_FIELD.focus();
+    if(courseTitle && COURSE_TITLE_ELEMENT) {
+        COURSE_TITLE_ELEMENT.textContent = courseTitle;
+        COURSE_TITLE_INPUT.value = COURSE_TITLE_ELEMENT.textContent.trim();
+    }
+    if(!focus_field) {
+        focus_field = document.getElementById('name');
+    }
+    focus_field.focus();
 }
 function modalShown() {
     console.log(!MODAL.classList.contains('hidden'));
@@ -39,9 +48,11 @@ if (MODAL) {
     CLOSE_MODAL_BUTTON.addEventListener('click', function() {
         closeModal();
     });
-    SHOW_MODAL_BUTTON.addEventListener('click', function() {
-        showModal();
-    })
+    if(SHOW_MODAL_BUTTON) {
+        SHOW_MODAL_BUTTON.addEventListener('click', function() {
+            showModal();
+        })
+    }
     window.addEventListener('keyup', function(e) {
         if (e.key === 'Escape' && modalShown()) {
             closeModal();

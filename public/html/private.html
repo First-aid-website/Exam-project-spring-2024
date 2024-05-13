@@ -24,6 +24,7 @@
     <link rel="icon" href="/media/favIcon_Light.webp" type="image/webp">
     <script src="/scripts/mobileMenu.js" defer></script>
     <script src="/scripts/modal.js" defer></script>
+    <script src="/scripts/inputSanitization.js" defer></script>
     <script src="/scripts/dataFetch-course-private.js"></script>
     <script src="/scripts/databaseFunctions.js"></script>
 </head>
@@ -50,14 +51,20 @@
         </nav> 
     </header>
     <main>
-        <button id="showModalButton" class="readMore">Opret kursus</button>
-        <aside id="modal" class="modal">
+        <aside id="modal" class="modal hidden">
             <form id="courseForm" class="modalForm" action="/join-course" method="POST">
                 <i id="closeModal" class="fas fa-x closeModalButton" tabindex="0" title="Luk kursusoprettelse (Esc)"></i>
                 <h2>Tilmeld dig følgende kursus:</h2>
                 <h3 id="courseTitle">-</h3>
-                <input type="text" id="name" name="name" placeholder="Dit fulde navn" title="Skriv dit fulde navn" required>
-                <input type="email" id="mail" name="mail" placeholder="Din email" title="Skriv din email" required>
+                <input type="hidden" id="courseTitleInput" name="courseTitle">
+                <div class="gridWrapper">
+                    <label for="name">Dit fulde navn:</label>
+                    <input type="text" id="name" name="name" placeholder="Dit fulde navn" title="Skriv dit fulde navn" required>
+                    <label for="mail">Din email:</label>
+                    <input type="email" id="mail" name="mail" placeholder="Din email" title="Skriv din email" required>
+                    <label for="amount">Antal pladser:</label>
+                    <input type="number" id="amount" name="amount" placeholder="1" title="Antal pladser du ønsker (max 16)" required>
+                </div>
                 <input type="submit" class="readMore" value="Tilmeld kursus">
             </form>
         </aside>
