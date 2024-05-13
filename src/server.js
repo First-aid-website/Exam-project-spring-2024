@@ -352,7 +352,9 @@ app.post('/send-message', limiter_messages, async (req, res) => {
         res.status(500).json({ error: 'An error occurred while sending the message' });
     }
 });
-
+app.post('/join-course', async (req, res) => {
+    const { name, mail, message } = req.body;
+});
 
 //Start serveren
 app.listen(port, () => {

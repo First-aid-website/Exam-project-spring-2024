@@ -20,9 +20,10 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css">
     <link rel="stylesheet" href="/styles/styles.css">
-    <link rel="stylesheet" href="/styles/animation.css">
+    <link rel="stylesheet" href="/styles/modal.css">
     <link rel="icon" href="/media/favIcon_Light.webp" type="image/webp">
     <script src="/scripts/mobileMenu.js" defer></script>
+    <script src="/scripts/modal.js" defer></script>
     <script src="/scripts/dataFetch-course-private.js"></script>
     <script src="/scripts/databaseFunctions.js"></script>
 </head>
@@ -49,6 +50,17 @@
         </nav> 
     </header>
     <main>
+        <button id="showModalButton" class="readMore">Opret kursus</button>
+        <aside id="modal" class="modal">
+            <form id="courseForm" class="modalForm" action="/join-course" method="POST">
+                <i id="closeModal" class="fas fa-x closeModalButton" tabindex="0" title="Luk kursusoprettelse (Esc)"></i>
+                <h2>Tilmeld dig følgende kursus:</h2>
+                <h3 id="courseTitle">-</h3>
+                <input type="text" id="name" name="name" placeholder="Dit fulde navn" title="Skriv dit fulde navn" required>
+                <input type="email" id="mail" name="mail" placeholder="Din email" title="Skriv din email" required>
+                <input type="submit" class="readMore" value="Tilmeld kursus">
+            </form>
+        </aside>
         <div class="heroImage" id="privateHeroImage"></div>
         <section id="privateCourses" class="sectionWrapper">
             <h1 class="moreSpace_block">Kurser til private borgere</h1>
