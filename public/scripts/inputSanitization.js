@@ -1,6 +1,7 @@
 const NUMBERS_ONLY = /[^\d]/g;
 const LETTERS_ONLY = /[^a-zæøåA-ZÆØÅ\s]/g;
 const TITLE_REGEX = /[^a-zæøåA-ZÆØÅ0-9\s[.,()]/g;
+const EMAIL_REGEX = /[\-'"?!%/$&()#¤=]/
 const inputs = {
     'username': {
         element: document.getElementById('username'),
@@ -46,6 +47,16 @@ const inputs = {
         element: document.getElementById('participants'),
         regex: NUMBERS_ONLY,
         maxLength: 2
+    },
+    'amount': {
+        element: document.getElementById('amount'),
+        regex: NUMBERS_ONLY,
+        maxLength: 2
+    },
+    'email': {
+        element: document.getElementById('mail'),
+        regex: EMAIL_REGEX,
+        maxLength: 50
     }
 };
 
