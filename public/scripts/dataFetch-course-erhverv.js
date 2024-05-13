@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3 class="courseDuration"><i class="far fa-calendar"></i> ${course.dateDay}. ${monthName} (${course.dateYear})<br><i class="far fa-clock"></i> ${duration}</h3>
                     <h3 class="coursePrice">${course.price},- eksl. moms</h3>
                     <a href="#" class="bookBtn readMore joinCourse">Bestil Plads</a>
-                    <a href="#" class="bookBtn readMore">Læs mere</a>
                 </div>
                 <ul class="courseTeachings">
                 ${course.content.split(',').map(content => `<li>${content.trim()}</li>`).join('')}
